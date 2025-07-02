@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfid56s5dalsv"]
+
+[ext_resource type="Script" path="res://spells/fireball/fireball_factory.gd" id="1_qp0da"]
+[ext_resource type="PackedScene" uid="uid://b5ph70nh3r33u" path="res://spells/fireball/fireball.tscn" id="2_jkmob"]
+[ext_resource type="Texture2D" uid="uid://hu3rq4h7bcsf" path="res://art/redball.png" id="3_vjcyv"]
+
+[node name="FireballFactory" type="Marker2D"]
+script = ExtResource("1_qp0da")
+spell = ExtResource("2_jkmob")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_vjcyv")
+
+[node name="attackTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="attackTimer" to="." method="_on_attack_timer_timeout"]

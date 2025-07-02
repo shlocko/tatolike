@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bteau5uvntou5"]
+
+[ext_resource type="Texture2D" uid="uid://bdn20qoagw37t" path="res://art/spawn_marker.png" id="1_d687w"]
+[ext_resource type="Script" path="res://spawn_marker.gd" id="2_rvoc6"]
+
+[node name="SpawnMarker" type="Sprite2D"]
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_d687w")
+script = ExtResource("2_rvoc6")
