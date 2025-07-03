@@ -8,14 +8,15 @@ var stats: FireballStats
 func _ready() -> void:
 	stats = FireballStats.new()
 	set_attack_speed(randf_range(0.5, 1.0))
-	stats.damage = 50
-	stats.range = 500
-	stats.explosive = false
+	stats.damage = Stat.new()._initialize(50, 10)
+	stats.range = Stat.new()._initialize(500, 10)
+	stats.explosive = Stat.new()._initialize(false, 100)
 	stats.explosion_radius = 0.0
 	stats.explosion_mod = 1.0
 	stats.projectile_speed = 400
 	stats.crit_chance = 0.1
 	stats.crit_mod = 2.0
+	print(stats.get_dict())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

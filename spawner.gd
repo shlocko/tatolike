@@ -19,6 +19,7 @@ func spawn_enemy(mob: PackedScene):
 	var location = position + direction
 	var spawn_marker = marker.instantiate()
 	spawn_marker.position = location
+	spawn_marker.position = spawn_marker.position.clamp(Vector2(15, 0), GlobalState.play_area)
 	spawn_marker.mob = mob
 	main.add_child(spawn_marker)
 	

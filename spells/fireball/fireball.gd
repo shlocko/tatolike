@@ -36,7 +36,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	var damage = stats.damage
 	if(randf_range(0, 1) < stats.crit_chance):
-		print("crit")
 		damage *= stats.crit_mod
 	body.health -= damage
 	queue_free()

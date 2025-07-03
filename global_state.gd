@@ -1,5 +1,6 @@
 extends Node
 
+const play_area = Vector2(1260, 740)
 var spells: Array[PackedScene]
 var spell_count: int
 
