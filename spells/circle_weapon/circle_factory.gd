@@ -19,6 +19,8 @@ func _ready() -> void:
 	stats.crit_mod = 2.0
 	stats.pierce = 1
 	add_upgrade(202)
+	add_upgrade(100)
+	print(get_qualified_upgrades())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,3 +63,14 @@ func add_upgrade(upgrade_id: int):
 	stats = upgrade.stats_mod.call(stats)
 	set_attack_speed((stats.attack_speed+stats.attack_speed_add) * stats.attack_speed_mul)
 	print(upgrades)
+
+func get_qualified_upgrades() -> Array[int]:
+	var arr: Array[int] = []
+	for id in Upgrades.get_all_from_spell("circle"):
+		var qualified = true
+		if(upgrades.has(id)): qualified = false
+		for rely_id in Upgrades.get_upgrade("circle", id).relies_on:
+			if(not upgrades.has(rely_id)):
+				qualified = false
+		if qualified: arr.append(id)
+	return arr
