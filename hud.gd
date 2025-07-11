@@ -10,3 +10,4 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	$HP.text = str(get_tree().get_nodes_in_group("player")[0].health)
 	$HP.show()
+	$Money.text = str("$ ", GlobalState.money)

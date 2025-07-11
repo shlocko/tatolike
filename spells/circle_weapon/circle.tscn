@@ -1,19 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5ph70nh3r33u"]
 
-[ext_resource type="Script" path="res://spells/fireball/fireball.gd" id="1_ju4gf"]
-[ext_resource type="Texture2D" uid="uid://hu3rq4h7bcsf" path="res://art/redball.png" id="2_hrxy8"]
+[ext_resource type="Script" path="res://spells/circle_weapon/circle.gd" id="1_4pfek"]
+[ext_resource type="Texture2D" uid="uid://hu3rq4h7bcsf" path="res://art/redball.png" id="2_3y3vt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n2xva"]
 radius = 7.0
 
-[node name="fireball" type="Area2D"]
-script = ExtResource("1_ju4gf")
+[node name="circle" type="Area2D"]
+script = ExtResource("1_4pfek")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_hrxy8")
+texture = ExtResource("2_3y3vt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_n2xva")

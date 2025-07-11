@@ -4,12 +4,14 @@ class_name Fireball
 
 var active = false
 var velocity = Vector2.ZERO
-var stats: FireballStats
+var stats: CircleStats
+var pierce_health: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	launch()
 	active = true
+	pierce_health = stats.pierce
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,8 +36,10 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	var damage = stats.damage
+	var damage = (stats.damage + stats.damage_add) * stats.damage_mul
 	if(randf_range(0, 1) < stats.crit_chance):
 		damage *= stats.crit_mod
 	body.health -= damage
-	queue_free()
+	pierce_health -= 1
+	if pierce_health <= 0:
+		queue_free()

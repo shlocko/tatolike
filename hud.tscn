@@ -8,5 +8,11 @@ script = ExtResource("1_tcl45")
 [node name="HP" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "200"
+
+[node name="Money" type="Label" parent="."]
+offset_left = 192.0
+offset_right = 392.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 35

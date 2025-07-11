@@ -2,6 +2,7 @@ extends RigidBody2D
 
 @export var speed: int
 @export var health: int
+@export var value: int
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,4 +20,5 @@ func _process(delta: float) -> void:
 	linear_velocity = velocity
 	
 	if health <= 0:
+		GlobalState.mob_died(value)
 		queue_free()

@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalState="*res://global_state.gd"
+Upgrades="*res://spells/upgrades.gd"
 
 [editor_plugins]
 
