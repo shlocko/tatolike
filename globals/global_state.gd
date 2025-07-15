@@ -28,4 +28,8 @@ func start_game(diff: int):
 	difficulty_base = diff
 	spells = []
 	spells.append(preload("res://spells/circle_weapon/circle_factory.tscn"))
+	spells.append(preload("res://spells/circle_weapon/circle_factory.tscn"))
+	spells.append(preload("res://spells/arrow_weapon/arrow_factory.tscn"))
+	spells.append(preload("res://spells/arrow_weapon/arrow_factory.tscn"))
+	spells.append(preload("res://spells/arrow_weapon/arrow_factory.tscn"))
 	spell_count = spells.size()

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcg3atl10body"]
+
+[ext_resource type="Script" path="res://spells/arrow_weapon/arrow_factory.gd" id="1_1a65b"]
+[ext_resource type="Texture2D" uid="uid://clqw6ey5mxsme" path="res://art/arrow.png" id="2_0evh0"]
+[ext_resource type="PackedScene" uid="uid://qsp3x0jld543" path="res://spells/arrow_weapon/arrow.tscn" id="2_2nnqe"]
+
+[node name="ArrowFactory" type="Marker2D"]
+script = ExtResource("1_1a65b")
+spell = ExtResource("2_2nnqe")
+
+[node name="AttackTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0evh0")
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

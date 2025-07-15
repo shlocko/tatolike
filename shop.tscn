@@ -20,14 +20,30 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -19.0
-offset_top = 32.0
-offset_right = 20.0
-offset_bottom = 64.0
+offset_left = -36.0
+offset_top = 8.0
+offset_right = 37.0
+offset_bottom = 50.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 30
 text = "Shop
 "
+
+[node name="NextWaveButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 16.0
+offset_right = 1132.0
+offset_bottom = 72.0
+text = "Next Wave"
+
+[node name="Money" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 24
 
 [node name="UpgradesContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
@@ -55,11 +71,12 @@ layout_mode = 2
 [node name="ShopControlsContainer" type="HBoxContainer" parent="Panel"]
 layout_mode = 1
 offset_left = 320.0
-offset_top = 120.0
+offset_top = 216.0
 offset_right = 832.0
-offset_bottom = 192.0
+offset_bottom = 288.0
 theme_override_constants/separation = 0
 alignment = 1
+metadata/_edit_group_ = true
 
 [node name="LeftButton" type="Button" parent="Panel/ShopControlsContainer"]
 custom_minimum_size = Vector2(50, 0)
@@ -109,23 +126,7 @@ offset_top = -288.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="NextWaveButton" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 1000.0
-offset_top = 16.0
-offset_right = 1132.0
-offset_bottom = 72.0
-text = "Next Wave"
-
-[node name="Money" type="Label" parent="Panel"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 56.0
-offset_bottom = 39.0
-theme_override_font_sizes/font_size = 24
-
+[connection signal="pressed" from="Panel/NextWaveButton" to="." method="_on_next_wave_button_pressed"]
 [connection signal="pressed" from="Panel/ShopControlsContainer/LeftButton" to="." method="_on_left_button_pressed"]
 [connection signal="pressed" from="Panel/ShopControlsContainer/RightButton" to="." method="_on_right_button_pressed"]
 [connection signal="pressed" from="Panel/RerollButton" to="." method="_on_reroll_button_pressed"]
-[connection signal="pressed" from="Panel/NextWaveButton" to="." method="_on_next_wave_button_pressed"]

@@ -1,23 +1,24 @@
 extends SpellFactory
 
+
 @export var spell: PackedScene
-var stats: CircleStats
+var stats: ArrowStats
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	spell_name = "circle"
-	stats = CircleStats.new()
-	stats.attack_speed = 1.0
-	stats.damage = 50
-	stats.range = 500
+	spell_name = "arrow"
+	stats = ArrowStats.new()
+	stats.attack_speed = 0.5
+	stats.damage = 100
+	stats.range = 50000
 	stats.explosive = false
 	stats.explosion_radius = 0.0
 	stats.explosion_mod = 1.0
-	stats.projectile_speed = 400
+	stats.projectile_speed = 1200
 	stats.crit_chance = 0.1
 	stats.crit_mod = 2.0
-	stats.pierce = 1
+	stats.pierce = 2
 	set_attack_speed(stats.attack_speed)
 	#add_upgrade(202)
 	#print(get_qualified_upgrades())
@@ -27,10 +28,20 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	var mobs = get_tree().get_nodes_in_group("mobs")
+	if(mobs.size() > 0):
+		var nearest = mobs[0]
+		for mob in mobs:
+			var maybe_nearest = position.distance_to(mob.position)
+			if maybe_nearest < position.distance_to(nearest.position):
+				nearest = mob
+		
+		$Sprite2D.rotation = global_position.direction_to(nearest.position).angle() + (PI / 2)
+	else:
+		$Sprite2D.rotation = 0
 
-func spawn_fireball() -> void:
-	var attack: Fireball = spell.instantiate()
+func spawn_arrow() -> void:
+	var attack: Arrow = spell.instantiate()
 	attack.position = global_position
 	attack.stats = stats
 	get_tree().get_nodes_in_group("main")[0].add_child(attack)
@@ -39,7 +50,7 @@ func spawn_fireball() -> void:
 
 func _on_attack_timer_timeout() -> void:
 	if get_tree().get_nodes_in_group("mobs").filter(func(mob: RigidBody2D): return global_position.distance_to(mob.position) <= stats.range).size() > 0:
-		spawn_fireball()
+		spawn_arrow()
 		hide()
 		await get_tree().create_timer($AttackTimer.wait_time / 2).timeout
 		show()
@@ -61,7 +72,7 @@ func print_user_defined_fields(obj):
 
 func add_upgrade(upgrade_id: int):
 	upgrades.append(upgrade_id)
-	var upgrade = Upgrades.get_upgrade("circle", upgrade_id)
+	var upgrade = Upgrades.get_upgrade("arrow", upgrade_id)
 	stats = upgrade.stats_mod.call(stats)
 	set_attack_speed((stats.attack_speed+stats.attack_speed_add) * stats.attack_speed_mul)
 	#print(upgrades)
