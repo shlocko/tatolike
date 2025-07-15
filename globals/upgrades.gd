@@ -172,25 +172,25 @@ func create_circle_upgrades():
 
 	var piercing_runes: Upgrade = Upgrade.new("Piercing Runes", 500, "Projectiles pierce +1 target.", 20)
 	piercing_runes.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.piercing += 1
+		stats.pierce_add += 1
 		return stats
 	upgrades[piercing_runes.id] = piercing_runes
 
 	var core_needle: Upgrade = Upgrade.new("Core Needle", 501, "Projectiles pierce +1 target.", 25)
 	core_needle.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.piercing += 1
+		stats.pierce_add += 1
 		return stats
 	upgrades[core_needle.id] = core_needle
 
 	var arc_drill: Upgrade = Upgrade.new("Arc Drill", 502, "Projectiles pierce +2 targets.", 40)
 	arc_drill.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.piercing += 2
+		stats.pierce_add += 2
 		return stats
 	upgrades[arc_drill.id] = arc_drill
 
 	var layerbreaker: Upgrade = Upgrade.new("Layerbreaker", 503, "Projectiles pierce +3 targets.", 60)
 	layerbreaker.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.piercing += 3
+		stats.pierce_add += 3
 		return stats
 	upgrades[layerbreaker.id] = layerbreaker
 	

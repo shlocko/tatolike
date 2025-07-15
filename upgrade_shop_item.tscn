@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddqqeynvuh6pc"]
+
+[ext_resource type="Script" path="res://upgrade_shop_item.gd" id="1_yaun8"]
+
+[node name="UpgradeShopItem" type="PanelContainer"]
+offset_right = 448.0
+offset_bottom = 96.0
+size_flags_horizontal = 3
+script = ExtResource("1_yaun8")
+
+[node name="Container" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PaddingHead" type="Control" parent="Container/Text"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Container/Text"]
+layout_mode = 2
+text = "Upgrade Name
+"
+
+[node name="Description" type="Label" parent="Container/Text"]
+layout_mode = 2
+text = "Description text goes here"
+
+[node name="Price" type="Label" parent="Container"]
+layout_mode = 2
+text = "$10"
+
+[node name="Padding" type="Control" parent="Container"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Container"]
+layout_mode = 2
+
+[node name="Buy" type="Button" parent="Container/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Buy
+"
+
+[node name="Save" type="Button" parent="Container/Buttons"]
+layout_mode = 2
+text = "Save"
+
+[connection signal="pressed" from="Container/Buttons/Buy" to="." method="_on_buy_pressed"]

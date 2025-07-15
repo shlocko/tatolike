@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 
 func _on_spawn_mob_timer_timeout() -> void:
 	var spawner = spawners.pick_random()
-	for n in randi_range(1, 10):
+	for n in randi_range(1, 1):
 		await get_tree().create_timer(randf_range(0.1, 0.3)).timeout
 		spawner.spawn_enemy(mob)
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://ctmk0vrbcanq"]
+[gd_scene load_steps=14 format=4 uid="uid://ctmk0vrbcanq"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ono1"]
 [ext_resource type="PackedScene" uid="uid://b7ssdq5bfmdwi" path="res://mob.tscn" id="2_mc1hw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ba66f42bf6lq4" path="res://player.tscn" id="4_v2tij"]
 [ext_resource type="PackedScene" uid="uid://corsjrjlxb8tj" path="res://hud.tscn" id="5_3utks"]
 [ext_resource type="PackedScene" uid="uid://5wiw2ulpbp5n" path="res://spawner.tscn" id="6_k1bem"]
+[ext_resource type="PackedScene" uid="uid://cn8u0dgt7dqqb" path="res://shop.tscn" id="7_f1cm4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bf5p"]
 texture = ExtResource("3_778nf")
@@ -161,5 +162,7 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
 position = Vector2(0, 383.5)
 shape = SubResource("RectangleShape2D_q3tox")
+
+[node name="Shop" parent="." instance=ExtResource("7_f1cm4")]
 
 [connection signal="timeout" from="spawn_mob_timer" to="." method="_on_spawn_mob_timer_timeout"]

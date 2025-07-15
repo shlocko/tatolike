@@ -34,3 +34,37 @@ var explosion_mod_mul: float = 1.0
 var projectile_speed_mul: float = 1.0
 var crit_chance_mul: float = 1.0
 var crit_mod_mul: float = 1.0
+
+func print_upgrades():
+	print(str(attack_speed_mul, range_mul, damage_mul, explosion_radius_mul, explosion_mod_mul, " ", crit_chance_mul, " ", crit_mod_mul))
+
+
+func get_attack_speed() -> float:
+	return (attack_speed + attack_speed_add) * attack_speed_mul
+
+func get_range() -> float:
+	return (range + range_add) * range_mul
+
+func get_damage() -> float:
+	return (damage + damage_add) * damage_mul
+
+func get_explosion_radius() -> float:
+	return (explosion_radius + explosion_radius_add) * explosion_radius_mul
+
+func get_explosion_mod() -> float:
+	return (explosion_mod + explosion_mod_add) * explosion_mod_mul
+
+func get_projectile_speed() -> float:
+	return (projectile_speed + projectile_speed_add) * projectile_speed_mul
+
+func get_crit_chance() -> float:
+	return (crit_chance + crit_chance_add) * crit_chance_mul
+
+func get_crit_mod() -> float:
+	return (crit_mod + crit_mod_add) * crit_mod_mul
+
+func get_pierce() -> int:
+	return pierce + pierce_add
+
+func is_explosive() -> bool:
+	return explosive

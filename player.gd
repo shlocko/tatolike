@@ -63,3 +63,11 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _on_attack_timer_timeout() -> void:
 	var mobs = get_tree().get_nodes_in_group("mobs")
+
+func get_spells() -> Array[SpellFactory]:
+	var spells: Array[SpellFactory] = []
+	var children = $SpellSpawner.get_children()
+	for ch in children:
+		if ch is SpellFactory:
+			spells.append(ch)
+	return spells

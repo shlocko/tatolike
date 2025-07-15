@@ -2,13 +2,13 @@ extends SpellFactory
 
 @export var spell: PackedScene
 var stats: CircleStats
-var upgrades: Array[int] = []
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	spell_name = "circle"
 	stats = CircleStats.new()
-	set_attack_speed(1.0)
+	stats.attack_speed = 1.0
 	stats.damage = 50
 	stats.range = 500
 	stats.explosive = false
@@ -18,9 +18,11 @@ func _ready() -> void:
 	stats.crit_chance = 0.1
 	stats.crit_mod = 2.0
 	stats.pierce = 1
-	add_upgrade(202)
-	add_upgrade(100)
-	print(get_qualified_upgrades())
+	set_attack_speed(stats.attack_speed)
+	#add_upgrade(202)
+	#print(get_qualified_upgrades())
+	for i in 4:
+		upgrades_shop.append(get_qualified_upgrades().pick_random())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,6 +34,7 @@ func spawn_fireball() -> void:
 	attack.position = global_position
 	attack.stats = stats
 	get_tree().get_nodes_in_group("main")[0].add_child(attack)
+	#print(stats.attack_speed_add)
 
 
 func _on_attack_timer_timeout() -> void:
@@ -42,7 +45,6 @@ func _on_attack_timer_timeout() -> void:
 		show()
 
 func set_attack_speed(aps: float):
-	stats.attack_speed = aps
 	$attackTimer.wait_time = 1/aps
 	print(str("aps ", aps))
 	print(str("time ", 1/aps))
@@ -62,15 +64,4 @@ func add_upgrade(upgrade_id: int):
 	var upgrade = Upgrades.get_upgrade("circle", upgrade_id)
 	stats = upgrade.stats_mod.call(stats)
 	set_attack_speed((stats.attack_speed+stats.attack_speed_add) * stats.attack_speed_mul)
-	print(upgrades)
-
-func get_qualified_upgrades() -> Array[int]:
-	var arr: Array[int] = []
-	for id in Upgrades.get_all_from_spell("circle"):
-		var qualified = true
-		if(upgrades.has(id)): qualified = false
-		for rely_id in Upgrades.get_upgrade("circle", id).relies_on:
-			if(not upgrades.has(rely_id)):
-				qualified = false
-		if qualified: arr.append(id)
-	return arr
+	#print(upgrades)

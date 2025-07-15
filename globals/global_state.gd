@@ -5,13 +5,16 @@ var spells: Array[PackedScene]
 var spell_count: int
 var money: int
 
+signal buy_upgrade(spell_id: int, upgrade_id: int, price: int)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	money = 0
-	for n in 1:
+	money = 10000
+	for n in 2:
 		spells.append(preload("res://spells/circle_weapon/circle_factory.tscn"))
 	spell_count = spells.size()
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
