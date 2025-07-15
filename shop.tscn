@@ -1,15 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://cn8u0dgt7dqqb"]
+[gd_scene load_steps=4 format=3 uid="uid://cn8u0dgt7dqqb"]
 
 [ext_resource type="PackedScene" uid="uid://ddqqeynvuh6pc" path="res://upgrade_shop_item.tscn" id="1_7mt8f"]
 [ext_resource type="Script" path="res://shop.gd" id="1_k64hr"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n375p"]
+bg_color = Color(0.223529, 0.223529, 0.223529, 1)
+
 [node name="Shop" type="CanvasLayer"]
-process_mode = 3
+process_mode = 2
 script = ExtResource("1_k64hr")
 
 [node name="Panel" type="Panel" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_n375p")
 
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 1
@@ -105,6 +109,23 @@ offset_top = -288.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[node name="NextWaveButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 16.0
+offset_right = 1132.0
+offset_bottom = 72.0
+text = "Next Wave"
+
+[node name="Money" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 39.0
+theme_override_font_sizes/font_size = 24
+
 [connection signal="pressed" from="Panel/ShopControlsContainer/LeftButton" to="." method="_on_left_button_pressed"]
 [connection signal="pressed" from="Panel/ShopControlsContainer/RightButton" to="." method="_on_right_button_pressed"]
 [connection signal="pressed" from="Panel/RerollButton" to="." method="_on_reroll_button_pressed"]
+[connection signal="pressed" from="Panel/NextWaveButton" to="." method="_on_next_wave_button_pressed"]

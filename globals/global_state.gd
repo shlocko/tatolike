@@ -8,15 +8,12 @@ var wave: int
 var difficulty_base: int
 
 signal buy_upgrade(spell_id: int, upgrade_id: int, price: int)
+signal next_wave
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	money = 0
-	for n in 2:
-		spells.append(preload("res://spells/circle_weapon/circle_factory.tscn"))
-	spell_count = spells.size()
-	
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -24,3 +21,11 @@ func _process(delta: float) -> void:
 
 func mob_died(value: int):
 	money += value
+
+func start_game(diff: int):
+	money = 0
+	wave = 1
+	difficulty_base = diff
+	spells = []
+	spells.append(preload("res://spells/circle_weapon/circle_factory.tscn"))
+	spell_count = spells.size()

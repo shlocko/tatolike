@@ -2,6 +2,7 @@ extends CanvasLayer
 
 var spells: Array[SpellFactory]
 var shop_index: int = 0
+var reroll_cost: int = GlobalState.wave
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,8 +17,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	shop_index = wrapi(shop_index, 0, spells.size())
 	shop_refresh_visual()
-	if Input.is_action_just_pressed("select"):
-		visible = !visible
 
 
 func _on_left_button_pressed() -> void:
@@ -38,7 +37,7 @@ func shop_right():
 func shop_reroll(index: int):
 	var spell = spells[index]
 	spell.upgrades_shop = spell.locked_upgrades_shop.duplicate()
-	while spell.upgrades_shop.size() < 4 and spell.get_qualified_upgrades().size() > 0:
+	while spell.upgrades_shop.size() < 4 and spell.get_qualified_upgrades().size() > spell.upgrades_shop.size():
 		var upgrade_id = spell.get_qualified_upgrades().pick_random()
 		while spell.upgrades_shop.has(upgrade_id):
 			upgrade_id = spell.get_qualified_upgrades().pick_random()
@@ -46,6 +45,7 @@ func shop_reroll(index: int):
 
 func shop_refresh_visual():
 	var spell = spells[shop_index]
+	$Panel/Money.text = str("$", GlobalState.money)
 	$Panel/ShopControlsContainer/SpellName.text = spell.spell_name
 	for i in 4:
 		var item = $Panel/UpgradesContainer.get_children()[i]
@@ -61,21 +61,35 @@ func shop_refresh_visual():
 			item.spell_id = shop_index
 		else:
 			item.visible = false
-	
 	for child in $Panel/StatsContainer.get_children():
 		child.queue_free()
-	
 	var getter_dict = spell.stats.get_named_stat_getters()
 	for name in getter_dict:
 		var stat_bar = preload("res://stat_line.tscn").instantiate()
 		stat_bar.get_node("Container/StatName").text = name
 		stat_bar.get_node("Container/StatLevel").text = str(getter_dict[name].call())
 		$Panel/StatsContainer.add_child(stat_bar)
+	$Panel/RerollButton.text = str("Reroll - $", reroll_cost)
+	if GlobalState.money >= reroll_cost:
+		$Panel/RerollButton.disabled = false
+	else:
+		$Panel/RerollButton.disabled = true
 
+func open():
+	for i in spells.size():
+		shop_reroll(i)
+	reroll_cost = GlobalState.wave
+	shop_index = 0
+	visible = true
+
+func close():
+	visible = false
 
 
 func _on_reroll_button_pressed() -> void:
 	shop_reroll(shop_index)
+	GlobalState.money -= reroll_cost
+	reroll_cost = round(reroll_cost * 1.2) + 1
 
 func buy_upgrade(spell_id, upgrade_id, price):
 	var spell = spells[spell_id]
@@ -83,3 +97,7 @@ func buy_upgrade(spell_id, upgrade_id, price):
 	GlobalState.money -= price
 	spell.upgrades_shop.remove_at(spell.upgrades_shop.find(upgrade_id))
 	
+
+
+func _on_next_wave_button_pressed() -> void:
+	GlobalState.next_wave.emit()

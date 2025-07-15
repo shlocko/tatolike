@@ -104,7 +104,7 @@ tile_set = SubResource("TileSet_37yho")
 position = Vector2(-80, 32)
 
 [node name="spawn_mob_timer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 2.0
 autostart = true
 
 [node name="HUD" parent="." instance=ExtResource("5_3utks")]
@@ -165,4 +165,9 @@ shape = SubResource("RectangleShape2D_q3tox")
 
 [node name="Shop" parent="." instance=ExtResource("7_f1cm4")]
 
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 45.0
+one_shot = true
+
 [connection signal="timeout" from="spawn_mob_timer" to="." method="_on_spawn_mob_timer_timeout"]
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]

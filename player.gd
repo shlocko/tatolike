@@ -1,7 +1,8 @@
 extends Area2D
 
 @export var speed: int
-@export var health: int = 200
+@export var health: int
+@export var max_health: int = 50
 @export var spell_count: int
 var invulnerable:bool = false
 var play_area: Vector2
@@ -14,6 +15,7 @@ func _ready() -> void:
 	$AnimatedSprite2D.animation = "stand"
 	position = Vector2(100, 100)
 	$attackTimer.start()
+	health = max_health
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -48,6 +50,10 @@ func _process(delta: float) -> void:
 	
 	position += velocity * delta
 	position = position.clamp(Vector2(15, 0), play_area)
+	
+	if health <= 0:
+		get_tree().root.get_node("Main").load_main_menu()
+	health = clamp(health, 0, max_health)
 
 
 func _on_i_frame_timer_timeout() -> void:

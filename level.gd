@@ -12,16 +12,39 @@ func _ready() -> void:
 	spawners.append($Spawner3)
 	spawners.append($Spawner4)
 	spawners.append($Spawner5)
+	GlobalState.next_wave.connect(next_wave)
+	$WaveTimer.start()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	$HUD/Timer.text = str(round($WaveTimer.time_left))
 
 
 func _on_spawn_mob_timer_timeout() -> void:
 	var spawner = spawners.pick_random()
-	for n in randi_range(1, 1):
+	for n in randi_range(1, GlobalState.wave + GlobalState.difficulty_base):
 		await get_tree().create_timer(randf_range(0.1, 0.3)).timeout
 		spawner.spawn_enemy(mob)
 	
+
+
+func _on_wave_timer_timeout() -> void:
+	wave_end()
+
+func wave_end():
+	$Shop.open()
+	get_tree().paused = true
+
+func next_wave():
+	$Shop.close()
+	GlobalState.wave += 1
+	clear_mobs()
+	$WaveTimer.start()
+	$Player.health += 10
+	$HUD/WaveCounter.text = str("Wave ", GlobalState.wave)
+	get_tree().paused = false
+
+func clear_mobs():
+	for mob in get_tree().get_nodes_in_group("mobs"):
+		mob.queue_free()

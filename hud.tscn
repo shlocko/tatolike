@@ -16,3 +16,20 @@ offset_left = 192.0
 offset_right = 392.0
 offset_bottom = 69.0
 theme_override_font_sizes/font_size = 35
+
+[node name="Timer" type="Label" parent="."]
+offset_top = 88.0
+offset_right = 152.0
+offset_bottom = 152.0
+theme_override_font_sizes/font_size = 24
+
+[node name="WaveCounter" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Wave 1"
