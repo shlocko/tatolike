@@ -10,7 +10,7 @@ func get_all_from_spell(spell_name: String) -> Dictionary:
 
 func _ready():
 	create_circle_upgrades()
-	print(get_all_from_spell("circle"))
+	#print(get_all_from_spell("circle"))
 
 func create_circle_upgrades():
 	var upgrades := {}

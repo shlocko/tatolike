@@ -68,3 +68,18 @@ func get_pierce() -> int:
 
 func is_explosive() -> bool:
 	return explosive
+
+
+func get_named_stat_getters() -> Dictionary:
+	return {
+		"attack_speed": Callable(self, "get_attack_speed"),
+		"range": Callable(self, "get_range"),
+		"damage": Callable(self, "get_damage"),
+		"explosion_radius": Callable(self, "get_explosion_radius"),
+		"explosion_mod": Callable(self, "get_explosion_mod"),
+		"projectile_speed": Callable(self, "get_projectile_speed"),
+		"crit_chance": Callable(self, "get_crit_chance"),
+		"crit_mod": Callable(self, "get_crit_mod"),
+		"pierce": Callable(self, "get_pierce"),
+		"explosive": Callable(self, "is_explosive")
+	}

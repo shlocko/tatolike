@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dbdp1xnkvgtw3"]
+
+[node name="StatLine" type="PanelContainer"]
+offset_right = 416.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Container" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="StatName" type="Label" parent="Container"]
+layout_mode = 2
+text = "Stat name
+"
+
+[node name="Spacer" type="Control" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatLevel" type="Label" parent="Container"]
+layout_mode = 2
+text = "SV"

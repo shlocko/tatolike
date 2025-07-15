@@ -61,6 +61,16 @@ func shop_refresh_visual():
 			item.spell_id = shop_index
 		else:
 			item.visible = false
+	
+	for child in $Panel/StatsContainer.get_children():
+		child.queue_free()
+	
+	var getter_dict = spell.stats.get_named_stat_getters()
+	for name in getter_dict:
+		var stat_bar = preload("res://stat_line.tscn").instantiate()
+		stat_bar.get_node("Container/StatName").text = name
+		stat_bar.get_node("Container/StatLevel").text = str(getter_dict[name].call())
+		$Panel/StatsContainer.add_child(stat_bar)
 
 
 

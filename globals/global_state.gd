@@ -4,13 +4,15 @@ const play_area = Vector2(1260, 740)
 var spells: Array[PackedScene]
 var spell_count: int
 var money: int
+var wave: int
+var difficulty_base: int
 
 signal buy_upgrade(spell_id: int, upgrade_id: int, price: int)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	money = 10000
+	money = 0
 	for n in 2:
 		spells.append(preload("res://spells/circle_weapon/circle_factory.tscn"))
 	spell_count = spells.size()
