@@ -13,10 +13,17 @@ func set_timer_duration(time: float) -> void:
 
 func get_qualified_upgrades() -> Array[int]:
 	var arr: Array[int] = []
+	for id in Upgrades.get_all_from_spell("general"):
+		var qualified = true
+		if(upgrades.has(id)): qualified = false
+		for rely_id in Upgrades.get_upgrade(id).relies_on:
+			if(not upgrades.has(rely_id)):
+				qualified = false
+		if qualified: arr.append(id)
 	for id in Upgrades.get_all_from_spell(spell_name):
 		var qualified = true
 		if(upgrades.has(id)): qualified = false
-		for rely_id in Upgrades.get_upgrade("circle", id).relies_on:
+		for rely_id in Upgrades.get_upgrade(id).relies_on:
 			if(not upgrades.has(rely_id)):
 				qualified = false
 		if qualified: arr.append(id)

@@ -72,7 +72,7 @@ func print_user_defined_fields(obj):
 
 func add_upgrade(upgrade_id: int):
 	upgrades.append(upgrade_id)
-	var upgrade = Upgrades.get_upgrade("arrow", upgrade_id)
+	var upgrade = Upgrades.get_upgrade(upgrade_id)
 	stats = upgrade.stats_mod.call(stats)
 	set_attack_speed((stats.attack_speed+stats.attack_speed_add) * stats.attack_speed_mul)
 	#print(upgrades)

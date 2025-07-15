@@ -41,7 +41,7 @@ func _on_body_entered(body: Node2D) -> void:
 	print(damage)
 	if(randf_range(0, 1) < stats.get_crit_chance()):
 		damage *= stats.get_crit_mod()
-	body.health -= damage
+	body.hit(damage, velocity.normalized()*30)
 	pierce_health -= 1
 	if pierce_health <= 0:
 		queue_free()

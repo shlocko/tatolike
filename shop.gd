@@ -52,7 +52,7 @@ func shop_refresh_visual():
 		if i < spell.upgrades_shop.size():
 			item.visible = true
 			var upgrade_id =  spells[shop_index].upgrades_shop[i]
-			var upgrade = Upgrades.get_upgrade(spells[shop_index].spell_name, upgrade_id)
+			var upgrade = Upgrades.get_upgrade(upgrade_id)
 			item.set_item_name(upgrade.upgrade_name)
 			item.set_item_description(upgrade.upgrade_text)
 			item.set_item_price(upgrade.price)

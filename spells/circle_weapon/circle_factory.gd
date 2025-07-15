@@ -8,8 +8,8 @@ var stats: CircleStats
 func _ready() -> void:
 	spell_name = "circle"
 	stats = CircleStats.new()
-	stats.attack_speed = 1.0
-	stats.damage = 50
+	stats.attack_speed = 1.8
+	stats.damage = 40
 	stats.range = 500
 	stats.explosive = false
 	stats.explosion_radius = 0.0
@@ -61,7 +61,7 @@ func print_user_defined_fields(obj):
 
 func add_upgrade(upgrade_id: int):
 	upgrades.append(upgrade_id)
-	var upgrade = Upgrades.get_upgrade("circle", upgrade_id)
+	var upgrade = Upgrades.get_upgrade(upgrade_id)
 	stats = upgrade.stats_mod.call(stats)
 	set_attack_speed((stats.attack_speed+stats.attack_speed_add) * stats.attack_speed_mul)
 	#print(upgrades)

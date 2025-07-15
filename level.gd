@@ -13,6 +13,7 @@ func _ready() -> void:
 	spawners.append($Spawner4)
 	spawners.append($Spawner5)
 	GlobalState.next_wave.connect(next_wave)
+	$WaveTimer.wait_time = 5
 	$WaveTimer.start()
 
 
@@ -23,7 +24,7 @@ func _process(delta: float) -> void:
 
 func _on_spawn_mob_timer_timeout() -> void:
 	var spawner = spawners.pick_random()
-	for n in randi_range(1, GlobalState.wave + GlobalState.difficulty_base):
+	for n in randi_range(max(1, GlobalState.wave / 3), (GlobalState.wave + GlobalState.difficulty_base + round(GlobalState.wave * 0.5))):
 		await get_tree().create_timer(randf_range(0.1, 0.3)).timeout
 		spawner.spawn_enemy(mob)
 	

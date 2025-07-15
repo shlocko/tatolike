@@ -1,389 +1,260 @@
 extends Node
 
 var registry: Dictionary = {}
+var registry_by_spell: Dictionary = {}
 
-func get_upgrade(spell_name: String, upgrade_id: int) -> Upgrade:
-	return registry.get(spell_name).get(upgrade_id)
+func get_upgrade(upgrade_id: int) -> Upgrade:
+	return registry.get(upgrade_id)
 
-func get_all_from_spell(spell_name: String) -> Dictionary:
-	return registry.get(spell_name)
+func get_all_from_spell(spell_name: String) -> Array:
+	return registry_by_spell.get(spell_name)
 
 func _ready():
+	create_general_spell_upgrades()
 	create_circle_upgrades()
 	create_arrow_upgrades()
 	#print(get_all_from_spell("circle"))
 
-func create_circle_upgrades():
-	var upgrades := {}
-	# -------------------------------
-	# Demolitionist Path (Explosions)
-	# -------------------------------
-	var combustion_core: Upgrade = Upgrade.new("Combustion Core", 100, "Enables explosions for Circle.", 25)
-	combustion_core.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.explosive = true
+
+# -------------------------
+# General Spell Upgrades
+# -------------------------
+
+func create_general_spell_upgrades():
+	var reg = []
+	
+	# -------------------------
+	# Repeater (Attack Speed Multiplier Path)
+	# -------------------------
+	var repeater: Upgrade = Upgrade.new(
+		"Repeater",
+		011,
+		"Increase Attack Speed by 20%.",
+		30
+	)
+	repeater.stats_mod = func(stats: Stats) -> Stats:
+		stats.attack_speed_mul += 0.2
 		return stats
-	upgrades[combustion_core.id] = combustion_core
+	registry[repeater.id] = repeater
+	reg.append(repeater.id)
 
-	var explosive_growth: Upgrade = Upgrade.new("Explosive Growth", 101, "Explosion radius increased by 30%.", 40)
-	explosive_growth.relies_on = [100]
-	explosive_growth.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.explosion_radius_mul += 0.3
-		return stats
-	upgrades[explosive_growth.id] = explosive_growth
-
-	var boom_core: Upgrade = Upgrade.new("Boom Core", 102, "Explosion damage increased by +0.2.", 45)
-	boom_core.relies_on = [100]
-	boom_core.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.explosion_mod_add += 0.2
-		return stats
-	upgrades[boom_core.id] = boom_core
-
-	var crater_maker: Upgrade = Upgrade.new("Crater Maker", 103, "Explosion radius increased by 40.", 50)
-	crater_maker.relies_on = [100]
-	crater_maker.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.explosion_radius_add += 40
-		return stats
-	upgrades[crater_maker.id] = crater_maker
-
-	var combustive_charge: Upgrade = Upgrade.new("Combustive Charge", 104, "Explosion damage increased by 25%.", 70)
-	combustive_charge.relies_on = [100, 101]
-	combustive_charge.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.explosion_mod_mul += 0.25
-		return stats
-	upgrades[combustive_charge.id] = combustive_charge
-
-	var heavy_circle: Upgrade = Upgrade.new("Heavy Circle", 105, "Increases your damage by 50.", 60)
-	heavy_circle.relies_on = [100]
-	heavy_circle.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.damage_add += 50
-		return stats
-	upgrades[heavy_circle.id] = heavy_circle
-
-	# -------------------------------
-	# Rapid Caster Path
-	# -------------------------------
-
-	var speed_slinger: Upgrade = Upgrade.new("Speed Slinger", 200, "Attack speed improved by 10%.", 15)
-	speed_slinger.stats_mod = func(stats: CircleStats) -> CircleStats:
+	var repeater_2: Upgrade = Upgrade.new(
+		"Repeater II",
+		012,
+		"Increase Attack Speed by 10%.",
+		40
+	)
+	repeater_2.stats_mod = func(stats: Stats) -> Stats:
 		stats.attack_speed_mul += 0.1
 		return stats
-	upgrades[speed_slinger.id] = speed_slinger
+	repeater_2.relies_on = [011]
+	registry[repeater_2.id] = repeater_2
+	reg.append(repeater_2.id)
 
-	var quicksilver_core: Upgrade = Upgrade.new("Quicksilver Core", 201, "Projectile speed increased by 150.", 20)
-	quicksilver_core.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.projectile_speed_add += 150
+	var repeater_3: Upgrade = Upgrade.new(
+		"Repeater III",
+		013,
+		"Increase Attack Speed by 20%.",
+		60
+	)
+	repeater_3.stats_mod = func(stats: Stats) -> Stats:
+		stats.attack_speed_mul += 0.2
 		return stats
-	upgrades[quicksilver_core.id] = quicksilver_core
-
-	var overclocked_casting: Upgrade = Upgrade.new("Overclocked Casting", 202, "Boosts attack speed but reduces damage.", 30)
-	overclocked_casting.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.attack_speed_mul += 0.3
-		stats.damage_mul -= 0.15
+	repeater_3.relies_on = [012]
+	registry[repeater_3.id] = repeater_3
+	reg.append(repeater_3.id)
+	
+	# -------------------------
+	# Sharp Edge (Damage Multiplier Path)
+	# -------------------------
+	var sharp_edge: Upgrade = Upgrade.new(
+		"Sharp Edge",
+		021,
+		"Increase Damage by 20%",
+		25
+	)
+	sharp_edge.stats_mod = func(stats: Stats) -> Stats:
+		stats.damage_mul += 0.2
 		return stats
-	upgrades[overclocked_casting.id] = overclocked_casting
+	registry[sharp_edge.id] = sharp_edge
+	reg.append(sharp_edge.id)
 
-	var snapfire_coil: Upgrade = Upgrade.new("Snapfire Coil", 203, "Attack speed increased by 0.1.", 50)
-	snapfire_coil.relies_on = [202]
-	snapfire_coil.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.attack_speed_add += 0.1
-		return stats
-	upgrades[snapfire_coil.id] = snapfire_coil
-
-	var velocity_matrix: Upgrade = Upgrade.new("Velocity Matrix", 204, "Projectile speed increased by 25%.", 60)
-	velocity_matrix.relies_on = [202]
-	velocity_matrix.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.projectile_speed_mul += 0.25
-		return stats
-	upgrades[velocity_matrix.id] = velocity_matrix
-
-	# -------------------------------
-	# Precision Path
-	# -------------------------------
-
-	var sharpened_circles: Upgrade = Upgrade.new("Sharpened Circles", 300, "Crit chance increased by 10%.", 20)
-	sharpened_circles.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.crit_chance_add += 0.1
-		return stats
-	upgrades[sharpened_circles.id] = sharpened_circles
-
-	var lance_trajectory: Upgrade = Upgrade.new("Lance Trajectory", 301, "Range increased by 200.", 20)
-	lance_trajectory.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.range_add += 200
-		return stats
-	upgrades[lance_trajectory.id] = lance_trajectory
-
-	var true_strike: Upgrade = Upgrade.new("True Strike", 302, "Crit multiplier increased by +0.5.", 35)
-	true_strike.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.crit_mod_add += 0.5
-		return stats
-	upgrades[true_strike.id] = true_strike
-
-	var deadeye_core: Upgrade = Upgrade.new("Deadeye Core", 303, "Crit multiplier increased by 25%.", 65)
-	deadeye_core.relies_on = [302]
-	deadeye_core.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.crit_mod_mul += 0.25
-		return stats
-	upgrades[deadeye_core.id] = deadeye_core
-
-	var sniper_poise: Upgrade = Upgrade.new("Sniper's Poise", 304, "Range increased by 20%.", 60)
-	sniper_poise.relies_on = [302]
-	sniper_poise.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.range_mul += 0.2
-		return stats
-	upgrades[sniper_poise.id] = sniper_poise
-
-	# -------------------------------
-	# Balanced Focus Path
-	# -------------------------------
-
-	var stable_circle: Upgrade = Upgrade.new("Stable Circle", 400, "Range increased by 100.", 15)
-	stable_circle.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.range_add += 100
-		return stats
-	upgrades[stable_circle.id] = stable_circle
-
-	var efficient_coating: Upgrade = Upgrade.new("Efficient Coating", 401, "Projectile speed increased by 75.", 15)
-	efficient_coating.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.projectile_speed_add += 75
-		return stats
-	upgrades[efficient_coating.id] = efficient_coating
-
-	var hardened_core: Upgrade = Upgrade.new("Hardened Core", 402, "Crit chance increased by 5%.", 15)
-	hardened_core.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.crit_chance_add += 0.05
-		return stats
-	upgrades[hardened_core.id] = hardened_core
-
-	var core_sync: Upgrade = Upgrade.new("Core Sync", 403, "Attack speed increased by 0.05.", 25)
-	core_sync.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.attack_speed_add += 0.05
-		return stats
-	upgrades[core_sync.id] = core_sync
-
-	var refined_edges: Upgrade = Upgrade.new("Refined Edges", 404, "Damage increased by 10%.", 45)
-	refined_edges.relies_on = [403]
-	refined_edges.stats_mod = func(stats: CircleStats) -> CircleStats:
+	var sharp_edge_2: Upgrade = Upgrade.new(
+		"Sharp Edge II",
+		022,
+		"Increase Damage by 10%",
+		30
+	)
+	sharp_edge_2.stats_mod = func(stats: Stats) -> Stats:
 		stats.damage_mul += 0.1
 		return stats
-	upgrades[refined_edges.id] = refined_edges
+	sharp_edge_2.relies_on = [021]
+	registry[sharp_edge_2.id] = sharp_edge_2
+	reg.append(sharp_edge_2.id)
 
-	# -------------------------------
-	# Piercing Path
-	# -------------------------------
-
-	var piercing_runes: Upgrade = Upgrade.new("Piercing Runes", 500, "Projectiles pierce +1 target.", 20)
-	piercing_runes.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.pierce_add += 1
+	var sharp_edge_3: Upgrade = Upgrade.new(
+		"Sharp Edge III",
+		023,
+		"Increase Damage by 10%",
+		40
+	)
+	sharp_edge_3.stats_mod = func(stats: Stats) -> Stats:
+		stats.damage_mul += 0.1
 		return stats
-	upgrades[piercing_runes.id] = piercing_runes
+	sharp_edge_3.relies_on = [022]
+	registry[sharp_edge_3.id] = sharp_edge_3
+	reg.append(sharp_edge_3.id)
 
-	var core_needle: Upgrade = Upgrade.new("Core Needle", 501, "Projectiles pierce +1 target.", 25)
-	core_needle.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.pierce_add += 1
+	var sharp_edge_4: Upgrade = Upgrade.new(
+		"Sharp Edge IV",
+		024,
+		"Increase Damage by 20%",
+		55
+	)
+	sharp_edge_4.stats_mod = func(stats: Stats) -> Stats:
+		stats.damage_mul += 0.2
 		return stats
-	upgrades[core_needle.id] = core_needle
-
-	var arc_drill: Upgrade = Upgrade.new("Arc Drill", 502, "Projectiles pierce +2 targets.", 40)
-	arc_drill.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.pierce_add += 2
-		return stats
-	upgrades[arc_drill.id] = arc_drill
-
-	var layerbreaker: Upgrade = Upgrade.new("Layerbreaker", 503, "Projectiles pierce +3 targets.", 60)
-	layerbreaker.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.pierce_add += 3
-		return stats
-	upgrades[layerbreaker.id] = layerbreaker
+	sharp_edge_4.relies_on = [023]
+	registry[sharp_edge_4.id] = sharp_edge_4
+	reg.append(sharp_edge_4.id)
 	
-	registry["circle"] = upgrades
+	# -------------------------
+	# Longshot (Range Multiplier Path)
+	# -------------------------
+	var longshot: Upgrade = Upgrade.new(
+		"Longshot",
+		031,
+		"Increase Range by 20%",
+		25
+	)
+	longshot.stats_mod = func(stats: Stats) -> Stats:
+		stats.range_mul += 0.2
+		return stats
+	registry[longshot.id] = longshot
+	reg.append(longshot.id)
+
+	var longshot_2: Upgrade = Upgrade.new(
+		"Longshot II",
+		032,
+		"Increase Range by 10%",
+		35
+	)
+	longshot_2.stats_mod = func(stats: Stats) -> Stats:
+		stats.range_mul += 0.1
+		return stats
+	longshot_2.relies_on = [031]
+	registry[longshot_2.id] = longshot_2
+	reg.append(longshot_2.id)
+
+	var longshot_3: Upgrade = Upgrade.new(
+		"Longshot III",
+		033,
+		"Increase Range by 20%",
+		50
+	)
+	longshot_3.stats_mod = func(stats: Stats) -> Stats:
+		stats.range_mul += 0.2
+		return stats
+	longshot_3.relies_on = [032]
+	registry[longshot_3.id] = longshot_3
+	reg.append(longshot_3.id)
+	
+	# -------------------------
+	# Keen Eye (Crit Chance Additive Path)
+	# -------------------------
+	var keen_eye: Upgrade = Upgrade.new(
+		"Keen Eye",
+		041,
+		"Increase Crit Chance by 10%.",
+		25
+	)
+	keen_eye.stats_mod = func(stats: Stats) -> Stats:
+		stats.crit_chance_add += 0.10
+		return stats
+	registry[keen_eye.id] = keen_eye
+	reg.append(keen_eye.id)
+
+	var keen_eye_2: Upgrade = Upgrade.new(
+		"Keen Eye II",
+		042,
+		"Increase Crit Chance by 5%.",
+		30
+	)
+	keen_eye_2.stats_mod = func(stats: Stats) -> Stats:
+		stats.crit_chance_add += 0.05
+		return stats
+	keen_eye_2.relies_on = [041]
+	registry[keen_eye_2.id] = keen_eye_2
+	reg.append(keen_eye_2.id)
+
+	var keen_eye_3: Upgrade = Upgrade.new(
+		"Keen Eye III",
+		043,
+		"Increase Crit Chance by 15%.",
+		45
+	)
+	keen_eye_3.stats_mod = func(stats: Stats) -> Stats:
+		stats.crit_chance_add += 0.15
+		return stats
+	keen_eye_3.relies_on = [042]
+	registry[keen_eye_3.id] = keen_eye_3
+	reg.append(keen_eye_3.id)
+	
+	# -------------------------
+	# Hypervelocity (Projectile Speed Multiplier Path)
+	# -------------------------
+	var hypervelocity: Upgrade = Upgrade.new(
+		"Hypervelocity",
+		051,
+		"Increase Projectile Speed by 20%.",
+		25
+	)
+	hypervelocity.stats_mod = func(stats: Stats) -> Stats:
+		stats.projectile_speed_mul += 0.2
+		return stats
+	registry[hypervelocity.id] = hypervelocity
+	reg.append(hypervelocity.id)
+
+	var hypervelocity_2: Upgrade = Upgrade.new(
+		"Hypervelocity II",
+		052,
+		"Increase Projectile Speed by 25%.",
+		40
+	)
+	hypervelocity_2.stats_mod = func(stats: Stats) -> Stats:
+		stats.projectile_speed_mul += 0.25
+		return stats
+	hypervelocity_2.relies_on = [051]
+	registry[hypervelocity_2.id] = hypervelocity_2
+	reg.append(hypervelocity_2.id)
+
+	var hypervelocity_3: Upgrade = Upgrade.new(
+		"Hypervelocity III",
+		053,
+		"Increase Projectile Speed by 35%.",
+		60
+	)
+	hypervelocity_3.stats_mod = func(stats: Stats) -> Stats:
+		stats.projectile_speed_mul += 0.35
+		return stats
+	hypervelocity_3.relies_on = [052]
+	registry[hypervelocity_3.id] = hypervelocity_3
+	reg.append(hypervelocity_3.id)
+	
+	registry_by_spell["general"] = reg
+	
 
 
 # -------------------------
-# Arrow Upgrades
+# Circle Upgrades
 # -------------------------
+
+func create_circle_upgrades():
+	var reg = []
+	
+	registry_by_spell["circle"] = reg
 
 func create_arrow_upgrades():
-	var upgrades := {}
-
-	# -------------------------------
-	# Demolitionist Path (Explosions)
-	# -------------------------------
-
-	var combustion_core: Upgrade = Upgrade.new("Combustion Core", 100, "Enables explosions for Arrow.", 25)
-	combustion_core.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.explosive = true
-		return stats
-	upgrades[combustion_core.id] = combustion_core
-
-	var explosive_growth: Upgrade = Upgrade.new("Explosive Growth", 101, "Explosion radius increased by 30%.", 40)
-	explosive_growth.relies_on = [100]
-	explosive_growth.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.explosion_radius_mul += 0.3
-		return stats
-	upgrades[explosive_growth.id] = explosive_growth
-
-	var boom_core: Upgrade = Upgrade.new("Boom Core", 102, "Explosion damage increased by +0.2.", 45)
-	boom_core.relies_on = [100]
-	boom_core.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.explosion_mod_add += 0.2
-		return stats
-	upgrades[boom_core.id] = boom_core
-
-	var crater_maker: Upgrade = Upgrade.new("Crater Maker", 103, "Explosion radius increased by 40.", 50)
-	crater_maker.relies_on = [100]
-	crater_maker.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.explosion_radius_add += 40
-		return stats
-	upgrades[crater_maker.id] = crater_maker
-
-	var combustive_charge: Upgrade = Upgrade.new("Combustive Charge", 104, "Explosion damage increased by 25%.", 70)
-	combustive_charge.relies_on = [100, 101]
-	combustive_charge.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.explosion_mod_mul += 0.25
-		return stats
-	upgrades[combustive_charge.id] = combustive_charge
-
-	var heavy_arrow: Upgrade = Upgrade.new("Heavy Arrow", 105, "Increases your damage by 50.", 60)
-	heavy_arrow.relies_on = [100]
-	heavy_arrow.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.damage_add += 50
-		return stats
-	upgrades[heavy_arrow.id] = heavy_arrow
-
-	# -------------------------------
-	# Rapid Caster Path
-	# -------------------------------
-
-	var speed_slinger: Upgrade = Upgrade.new("Speed Slinger", 200, "Attack speed improved by 10%.", 15)
-	speed_slinger.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.attack_speed_mul += 0.1
-		return stats
-	upgrades[speed_slinger.id] = speed_slinger
-
-	var quicksilver_core: Upgrade = Upgrade.new("Quicksilver Core", 201, "Projectile speed increased by 150.", 20)
-	quicksilver_core.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.projectile_speed_add += 150
-		return stats
-	upgrades[quicksilver_core.id] = quicksilver_core
-
-	var overclocked_casting: Upgrade = Upgrade.new("Overclocked Casting", 202, "Boosts attack speed but reduces damage.", 30)
-	overclocked_casting.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.attack_speed_mul += 0.3
-		stats.damage_mul -= 0.15
-		return stats
-	upgrades[overclocked_casting.id] = overclocked_casting
-
-	var snapfire_coil: Upgrade = Upgrade.new("Snapfire Coil", 203, "Attack speed increased by 0.1.", 50)
-	snapfire_coil.relies_on = [202]
-	snapfire_coil.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.attack_speed_add += 0.1
-		return stats
-	upgrades[snapfire_coil.id] = snapfire_coil
-
-	var velocity_matrix: Upgrade = Upgrade.new("Velocity Matrix", 204, "Projectile speed increased by 25%.", 60)
-	velocity_matrix.relies_on = [202]
-	velocity_matrix.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.projectile_speed_mul += 0.25
-		return stats
-	upgrades[velocity_matrix.id] = velocity_matrix
-
-	# -------------------------------
-	# Precision Path
-	# -------------------------------
-
-	var sharpened_arrows: Upgrade = Upgrade.new("Sharpened Arrows", 300, "Crit chance increased by 10%.", 20)
-	sharpened_arrows.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.crit_chance_add += 0.1
-		return stats
-	upgrades[sharpened_arrows.id] = sharpened_arrows
-
-	var lance_trajectory: Upgrade = Upgrade.new("Lance Trajectory", 301, "Range increased by 200.", 20)
-	lance_trajectory.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.range_add += 200
-		return stats
-	upgrades[lance_trajectory.id] = lance_trajectory
-
-	var true_strike: Upgrade = Upgrade.new("True Strike", 302, "Crit multiplier increased by +0.5.", 35)
-	true_strike.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.crit_mod_add += 0.5
-		return stats
-	upgrades[true_strike.id] = true_strike
-
-	var deadeye_core: Upgrade = Upgrade.new("Deadeye Core", 303, "Crit multiplier increased by 25%.", 65)
-	deadeye_core.relies_on = [302]
-	deadeye_core.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.crit_mod_mul += 0.25
-		return stats
-	upgrades[deadeye_core.id] = deadeye_core
-
-	var sniper_poise: Upgrade = Upgrade.new("Sniper's Poise", 304, "Range increased by 20%.", 60)
-	sniper_poise.relies_on = [302]
-	sniper_poise.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.range_mul += 0.2
-		return stats
-	upgrades[sniper_poise.id] = sniper_poise
-
-	# -------------------------------
-	# Balanced Focus Path
-	# -------------------------------
-
-	var stable_arrow: Upgrade = Upgrade.new("Stable Arrow", 400, "Range increased by 100.", 15)
-	stable_arrow.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.range_add += 100
-		return stats
-	upgrades[stable_arrow.id] = stable_arrow
-
-	var efficient_coating: Upgrade = Upgrade.new("Efficient Coating", 401, "Projectile speed increased by 75.", 15)
-	efficient_coating.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.projectile_speed_add += 75
-		return stats
-	upgrades[efficient_coating.id] = efficient_coating
-
-	var hardened_core: Upgrade = Upgrade.new("Hardened Core", 402, "Crit chance increased by 5%.", 15)
-	hardened_core.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.crit_chance_add += 0.05
-		return stats
-	upgrades[hardened_core.id] = hardened_core
-
-	var core_sync: Upgrade = Upgrade.new("Core Sync", 403, "Attack speed increased by 0.05.", 25)
-	core_sync.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.attack_speed_add += 0.05
-		return stats
-	upgrades[core_sync.id] = core_sync
-
-	var refined_edges: Upgrade = Upgrade.new("Refined Edges", 404, "Damage increased by 10%.", 45)
-	refined_edges.relies_on = [403]
-	refined_edges.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.damage_mul += 0.1
-		return stats
-	upgrades[refined_edges.id] = refined_edges
-
-	# -------------------------------
-	# Piercing Path
-	# -------------------------------
-
-	var piercing_runes: Upgrade = Upgrade.new("Piercing Runes", 500, "Projectiles pierce +1 target.", 20)
-	piercing_runes.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.pierce_add += 1
-		return stats
-	upgrades[piercing_runes.id] = piercing_runes
-
-	var core_needle: Upgrade = Upgrade.new("Core Needle", 501, "Projectiles pierce +1 target.", 25)
-	core_needle.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.pierce_add += 1
-		return stats
-	upgrades[core_needle.id] = core_needle
-
-	var arc_drill: Upgrade = Upgrade.new("Arc Drill", 502, "Projectiles pierce +2 targets.", 40)
-	arc_drill.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.pierce_add += 2
-		return stats
-	upgrades[arc_drill.id] = arc_drill
-
-	var layerbreaker: Upgrade = Upgrade.new("Layerbreaker", 503, "Projectiles pierce +3 targets.", 60)
-	layerbreaker.stats_mod = func(stats: ArrowStats) -> ArrowStats:
-		stats.pierce_add += 3
-		return stats
-	upgrades[layerbreaker.id] = layerbreaker
-
-	registry["arrow"] = upgrades
+	var reg = []
+	
+	registry_by_spell["arrow"] = reg

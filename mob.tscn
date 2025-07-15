@@ -28,7 +28,7 @@ lock_rotation = true
 script = ExtResource("1_6qas1")
 speed = 100
 health = 100
-value = 5
+value = 2
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
