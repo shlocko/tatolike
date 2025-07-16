@@ -8,14 +8,19 @@ func _ready() -> void:
 	var direction = Vector2(0, -50)
 	flippity_flop = 1.0
 	
-	arc = (2*PI)/GlobalState.spell_count
-	for spell in GlobalState.spells:
-		var spellInstance: SpellFactory = spell.instantiate()
-		spellInstance.position = direction
-		direction = direction.rotated(arc)
-		spellInstance.set_timer_duration(randf_range(0.5, 1.0))
-		add_child(spellInstance)
 
+func add_spell(spell: PackedScene):
+	var spellInstance: SpellFactory = spell.instantiate()
+	add_child(spellInstance)
+	reset_spell_positions()
+
+func reset_spell_positions():
+	var direction = Vector2(0, -50)
+	var spells := get_children()
+	var arc = (2*PI)/(get_children().size())
+	for spell in spells:
+		spell.position = direction
+		direction = direction.rotated(arc)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

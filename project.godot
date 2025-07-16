@@ -13,12 +13,19 @@ config_version=5
 config/name="Bruhmater"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://art/icon.svg"
 
 [autoload]
 
 GlobalState="*res://globals/global_state.gd"
 Upgrades="*res://globals/upgrades.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 

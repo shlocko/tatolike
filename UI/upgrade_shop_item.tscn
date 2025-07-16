@@ -1,12 +1,12 @@
 [gd_scene load_steps=2 format=3 uid="uid://ddqqeynvuh6pc"]
 
-[ext_resource type="Script" path="res://upgrade_shop_item.gd" id="1_yaun8"]
+[ext_resource type="Script" path="res://UI/upgrade_shop_item.gd" id="1_f5iod"]
 
 [node name="UpgradeShopItem" type="PanelContainer"]
 offset_right = 448.0
 offset_bottom = 96.0
 size_flags_horizontal = 3
-script = ExtResource("1_yaun8")
+script = ExtResource("1_f5iod")
 
 [node name="Container" type="HBoxContainer" parent="."]
 layout_mode = 2

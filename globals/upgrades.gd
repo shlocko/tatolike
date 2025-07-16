@@ -252,6 +252,246 @@ func create_general_spell_upgrades():
 func create_circle_upgrades():
 	var reg = []
 	
+	
+	# -------------------------
+	# Piercing Shot (Piercing Add Upgrade Path)
+	# -------------------------
+
+	var piercing_shot: Upgrade = Upgrade.new(
+		"Piercing Shot",
+		101,
+		"Allows projectile to pierce enemies",
+		40
+	)
+	piercing_shot.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.pierce_add += 1
+		return stats
+	piercing_shot.incompatible = [111]
+	registry[piercing_shot.id] = piercing_shot
+	reg.append(piercing_shot.id)
+
+	var piercing_shot_2: Upgrade = Upgrade.new(
+		"Piercing Shot II",
+		102,
+		"Increases pierce by 1",
+		50
+	)
+	piercing_shot_2.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.pierce_add += 1
+		return stats
+	piercing_shot_2.relies_on = [101]
+	piercing_shot_2.incompatible = [111]
+	registry[piercing_shot_2.id] = piercing_shot_2
+	reg.append(piercing_shot_2.id)
+
+	var piercing_shot_3: Upgrade = Upgrade.new(
+		"Piercing Shot III",
+		103,
+		"Increases pierce by 1",
+		60
+	)
+	piercing_shot_3.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.pierce_add += 1
+		return stats
+	piercing_shot_3.relies_on = [102]
+	piercing_shot_3.incompatible = [111]
+	registry[piercing_shot_3.id] = piercing_shot_3
+	reg.append(piercing_shot_3.id)
+
+	var piercing_shot_4: Upgrade = Upgrade.new(
+		"Piercing Shot IV",
+		104,
+		"Increases pierce by 2",
+		75
+	)
+	piercing_shot_4.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.pierce_add += 2
+		return stats
+	piercing_shot_4.relies_on = [103]
+	piercing_shot_4.incompatible = [111]
+	registry[piercing_shot_4.id] = piercing_shot_4
+	reg.append(piercing_shot_4.id)
+	
+	
+	# -------------------------
+	# Explosive Shot (Explosive Upgrade Path)
+	# -------------------------
+	var explosive_shot: Upgrade = Upgrade.new(
+		"Explosive Shot",
+		111,
+		"Causes projectile to explode on contact",
+		40
+	)
+	explosive_shot.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.explosive	= true
+		return stats
+	explosive_shot.incompatible = [101, 131]
+	registry[explosive_shot.id] = explosive_shot
+	reg.append(explosive_shot.id)
+	
+	var explosive_shot_2: Upgrade = Upgrade.new(
+		"Explosive Shot II",
+		112,
+		"Increase explosion radius by 50%, and explosion damage by 20%",
+		60
+	)
+	explosive_shot_2.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.explosion_mod_add += 0.2
+		stats.explosion_radius_mul += 0.5
+		return stats
+	explosive_shot_2.incompatible = [101]
+	explosive_shot_2.relies_on = [111]
+	registry[explosive_shot_2.id] = explosive_shot_2
+	reg.append(explosive_shot_2.id)
+	
+
+	# -------------------------
+	# Overclocked (High-Speed, Low-Damage Path)
+	# -------------------------
+	var overclocked: Upgrade = Upgrade.new(
+		"Overclocked",
+		121,
+		"Increase Attack Speed by 15% but reduce Damage by 10%",
+		25
+	)
+	overclocked.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.attack_speed_mul += 0.15
+		stats.damage_mul -= 0.1
+		return stats
+	registry[overclocked.id] = overclocked
+	reg.append(overclocked.id)
+
+	var overclocked_2: Upgrade = Upgrade.new(
+		"Overclocked II",
+		122,
+		"Increase Attack Speed by 20% but reduce Damage by 10%",
+		35
+	)
+	overclocked_2.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.attack_speed_mul += 0.2
+		stats.damage_mul -= 0.1
+		return stats
+	overclocked_2.relies_on = [121]
+	registry[overclocked_2.id] = overclocked_2
+	reg.append(overclocked_2.id)
+
+	var overclocked_3: Upgrade = Upgrade.new(
+		"Overclocked III",
+		123,
+		"Increase Attack Speed by 25% but reduce Damage by 15%",
+		45
+	)
+	overclocked_3.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.attack_speed_mul += 0.25
+		stats.damage_mul -= 0.15
+		return stats
+	overclocked_3.relies_on = [122]
+	registry[overclocked_3.id] = overclocked_3
+	reg.append(overclocked_3.id)
+
+	var overclocked_4: Upgrade = Upgrade.new(
+		"Overclocked IV",
+		124,
+		"Increase Attack Speed by 20% but reduce Crit Chance by 30%",
+		60
+	)
+	overclocked_4.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.attack_speed_mul += 0.2
+		stats.crit_chance_add -= 0.3
+		return stats
+	overclocked_4.relies_on = [123]
+	registry[overclocked_4.id] = overclocked_4
+	reg.append(overclocked_4.id)
+
+	var overclocked_5: Upgrade = Upgrade.new(
+		"Overclocked V",
+		125,
+		"Increase Attack Speed by 20% but reduce Crit Chance by 30%",
+		75
+	)
+	overclocked_5.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.attack_speed_mul += 0.2
+		stats.crit_chance_add -= 0.3
+		return stats
+	overclocked_5.relies_on = [124]
+	registry[overclocked_5.id] = overclocked_5
+	reg.append(overclocked_5.id)
+	
+	# -------------------------
+	# Precision Matrix (Crit / Range / Pierce Path with Tradeoffs)
+	# -------------------------
+	var precision_matrix: Upgrade = Upgrade.new(
+		"Precision Matrix",
+		131,
+		"Increase Crit Chance by 20%",
+		30
+	)
+	precision_matrix.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.crit_chance_add += 0.2
+		return stats
+	precision_matrix.incompatible = [111]
+	registry[precision_matrix.id] = precision_matrix
+	reg.append(precision_matrix.id)
+
+	var precision_matrix_2: Upgrade = Upgrade.new(
+		"Precision Matrix II",
+		132,
+		"Increase Projectile Speed by 40%, Crit Damage by 50%, and reduce Attack Speed by 10%",
+		45
+	)
+	precision_matrix_2.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.projectile_speed_mul += 0.4
+		stats.crit_mod_mul += 0.5
+		stats.attack_speed_mul -= 0.1
+		return stats
+	precision_matrix_2.relies_on = [131]
+	precision_matrix_2.incompatible = [111]
+	registry[precision_matrix_2.id] = precision_matrix_2
+	reg.append(precision_matrix_2.id)
+
+	var precision_matrix_3: Upgrade = Upgrade.new(
+		"Precision Matrix III",
+		133,
+		"Increase Range by 100",
+		60
+	)
+	precision_matrix_3.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.range_add += 100
+		return stats
+	precision_matrix_3.relies_on = [132]
+	precision_matrix_3.incompatible = [111]
+	registry[precision_matrix_3.id] = precision_matrix_3
+	reg.append(precision_matrix_3.id)
+
+	var precision_matrix_4: Upgrade = Upgrade.new(
+		"Precision Matrix IV",
+		134,
+		"Reduce Damage by 10% and Attack Speed by 30%",
+		65
+	)
+	precision_matrix_4.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.damage_mul -= 0.1
+		stats.attack_speed_mul -= 0.3
+		return stats
+	precision_matrix_4.relies_on = [133]
+	precision_matrix_4.incompatible = [111]
+	registry[precision_matrix_4.id] = precision_matrix_4
+	reg.append(precision_matrix_4.id)
+
+	var precision_matrix_5: Upgrade = Upgrade.new(
+		"Precision Matrix V",
+		135,
+		"Projectiles pierce infinitely",
+		85
+	)
+	precision_matrix_5.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.pierce_add += 999
+		return stats
+	precision_matrix_5.relies_on = [134]
+	precision_matrix_5.incompatible = [111]
+	registry[precision_matrix_5.id] = precision_matrix_5
+	reg.append(precision_matrix_5.id)
+	
 	registry_by_spell["circle"] = reg
 
 func create_arrow_upgrades():

@@ -7,6 +7,7 @@ var id: int
 var upgrade_text: String
 var price: int
 var relies_on: Array[int]
+var incompatible: Array[int]
 
 var stats_mod: Callable = func (stats) -> Variant:
 	return stats

@@ -11,7 +11,7 @@ func _ready() -> void:
 	stats = ArrowStats.new()
 	stats.attack_speed = 0.5
 	stats.damage = 100
-	stats.range = 50000
+	stats.range = 1500
 	stats.explosive = false
 	stats.explosion_radius = 0.0
 	stats.explosion_mod = 1.0
@@ -22,8 +22,6 @@ func _ready() -> void:
 	set_attack_speed(stats.attack_speed)
 	#add_upgrade(202)
 	#print(get_qualified_upgrades())
-	for i in 4:
-		upgrades_shop.append(get_qualified_upgrades().pick_random())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

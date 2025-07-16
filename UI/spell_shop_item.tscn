@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciscdnayglba"]
+
+[ext_resource type="Script" path="res://UI/spell_shop_item.gd" id="1_af5hs"]
+
+[node name="SpellShopItem" type="PanelContainer"]
+offset_right = 432.0
+offset_bottom = 66.0
+script = ExtResource("1_af5hs")
+
+[node name="Container" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LeftPadding" type="Control" parent="Container"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="SpellName" type="Label" parent="Container"]
+layout_mode = 2
+text = "Spell Name"
+
+[node name="Spacer" type="Control" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Price" type="Label" parent="Container"]
+layout_mode = 2
+text = "$50"
+
+[node name="RightPadding" type="Control" parent="Container"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Container"]
+layout_mode = 2
+
+[node name="Buy" type="Button" parent="Container/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Buy
+"
+
+[connection signal="pressed" from="Container/Buttons/Buy" to="." method="_on_buy_pressed"]

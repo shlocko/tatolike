@@ -10,7 +10,7 @@ func load_level():
 	change_scene("res://level.tscn")
 
 func load_main_menu():
-	change_scene("res://main_menu.tscn")
+	change_scene("res://UI/main_menu.tscn")
 
 func change_scene(path: String):
 	if current_scene:

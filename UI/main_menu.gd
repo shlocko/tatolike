@@ -12,8 +12,8 @@ func _process(delta: float) -> void:
 
 
 func _on_start_button_pressed() -> void:
-	GlobalState.start_game(0)
 	get_tree().root.get_node("Main").load_level()
+	GlobalState.start_game(0)
 
 
 func _on_quit_button_pressed() -> void:

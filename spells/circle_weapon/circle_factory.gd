@@ -21,8 +21,6 @@ func _ready() -> void:
 	set_attack_speed(stats.attack_speed)
 	#add_upgrade(202)
 	#print(get_qualified_upgrades())
-	for i in 4:
-		upgrades_shop.append(get_qualified_upgrades().pick_random())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

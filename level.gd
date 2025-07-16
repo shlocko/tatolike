@@ -13,7 +13,7 @@ func _ready() -> void:
 	spawners.append($Spawner4)
 	spawners.append($Spawner5)
 	GlobalState.next_wave.connect(next_wave)
-	$WaveTimer.wait_time = 5
+	$WaveTimer.wait_time = 1
 	$WaveTimer.start()
 
 

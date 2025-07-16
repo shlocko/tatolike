@@ -1,0 +1,200 @@
+[gd_scene load_steps=6 format=3 uid="uid://cn8u0dgt7dqqb"]
+
+[ext_resource type="PackedScene" uid="uid://ddqqeynvuh6pc" path="res://UI/upgrade_shop_item.tscn" id="1_7mt8f"]
+[ext_resource type="Script" path="res://UI/shop.gd" id="1_k64hr"]
+[ext_resource type="PackedScene" uid="uid://ciscdnayglba" path="res://UI/spell_shop_item.tscn" id="3_87xu7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n375p"]
+bg_color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owqwu"]
+bg_color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[node name="Shop" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_k64hr")
+
+[node name="RightPanel" type="Panel" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -900.0
+offset_top = -504.0
+offset_right = -20.0
+offset_bottom = 496.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n375p")
+metadata/_edit_lock_ = true
+
+[node name="Title" type="Label" parent="RightPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_top = 32.0
+offset_right = 67.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Upgrades
+"
+
+[node name="Money" type="Label" parent="RightPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 24
+
+[node name="UpgradesContainer" type="VBoxContainer" parent="RightPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = -72.0
+offset_right = 392.0
+offset_bottom = 204.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="Item1" parent="RightPanel/UpgradesContainer" instance=ExtResource("1_7mt8f")]
+layout_mode = 2
+
+[node name="Item2" parent="RightPanel/UpgradesContainer" instance=ExtResource("1_7mt8f")]
+layout_mode = 2
+
+[node name="Item3" parent="RightPanel/UpgradesContainer" instance=ExtResource("1_7mt8f")]
+layout_mode = 2
+
+[node name="Item4" parent="RightPanel/UpgradesContainer" instance=ExtResource("1_7mt8f")]
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="ShopControlsContainer" type="HBoxContainer" parent="RightPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 272.0
+offset_right = 256.0
+offset_bottom = 344.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+alignment = 1
+metadata/_edit_group_ = true
+
+[node name="LeftButton" type="Button" parent="RightPanel/ShopControlsContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="LeftGap" type="Control" parent="RightPanel/ShopControlsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpellName" type="Label" parent="RightPanel/ShopControlsContainer"]
+layout_mode = 2
+text = "Spell Name
+"
+
+[node name="RightGap" type="Control" parent="RightPanel/ShopControlsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RightButton" type="Button" parent="RightPanel/ShopControlsContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = ">"
+
+[node name="UpgradeRerollButton" type="Button" parent="RightPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -384.0
+offset_top = 368.0
+offset_right = -330.0
+offset_bottom = 416.0
+grow_horizontal = 2
+text = "Reroll
+"
+
+[node name="StatsContainer" type="VBoxContainer" parent="RightPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -261.5
+offset_top = -276.0
+offset_right = 261.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LeftPanel" type="Panel" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -500.0
+offset_right = 900.0
+offset_bottom = 500.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_owqwu")
+metadata/_edit_lock_ = true
+
+[node name="NextWaveButton" type="Button" parent="LeftPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 66.0
+grow_horizontal = 0
+text = "Next Wave"
+
+[node name="SpellShopContainer" type="Control" parent="LeftPanel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpellShopItem" parent="LeftPanel/SpellShopContainer" instance=ExtResource("3_87xu7")]
+layout_mode = 2
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 204.0
+offset_top = 35.0
+offset_right = 636.0
+offset_bottom = 101.0
+grow_horizontal = 2
+
+[node name="SpellRerollButton" type="Button" parent="LeftPanel/SpellShopContainer"]
+layout_mode = 2
+anchor_left = 0.25
+anchor_top = 0.07
+anchor_right = 0.25
+anchor_bottom = 0.07
+offset_left = 74.0
+offset_top = 43.2
+offset_right = 169.0
+offset_bottom = 91.2
+text = "Reroll	-	$150"
+
+[connection signal="pressed" from="RightPanel/ShopControlsContainer/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="RightPanel/ShopControlsContainer/RightButton" to="." method="_on_right_button_pressed"]
+[connection signal="pressed" from="RightPanel/UpgradeRerollButton" to="." method="_on_upgrade_reroll_button_pressed"]
+[connection signal="pressed" from="LeftPanel/NextWaveButton" to="." method="_on_next_wave_button_pressed"]
+[connection signal="pressed" from="LeftPanel/SpellShopContainer/SpellRerollButton" to="." method="_on_spell_reroll_button_pressed"]
