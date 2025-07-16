@@ -38,7 +38,6 @@ func add_spell(spell: int):
 func get_spell_count():
 	if (get_tree().get_nodes_in_group("player").size() < 1): return 0
 	var count = get_tree().get_first_node_in_group("player").get_node("SpellSpawner").get_children().size()
-	#print(count)
 	return count
 
 func get_max_spell_count():
@@ -46,8 +45,8 @@ func get_max_spell_count():
 	return count
 
 func start_game(diff: int):
-	money = 10000
+	money = 0
 	wave = 1
 	difficulty_base = diff
-	add_spell(1)
+	add_spell(0)
 	#max_spell_count = floor((wave + difficulty_base) / 5) + 1

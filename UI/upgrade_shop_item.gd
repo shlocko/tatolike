@@ -28,5 +28,4 @@ func set_buy_enabled(t: bool):
 
 
 func _on_buy_pressed() -> void:
-	print("tist")
 	GlobalState.buy_upgrade.emit(spell_id, upgrade_id, price)

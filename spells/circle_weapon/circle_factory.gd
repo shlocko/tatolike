@@ -9,7 +9,7 @@ func _ready() -> void:
 	spell_name = "circle"
 	stats = CircleStats.new()
 	stats.attack_speed = 1.8
-	stats.damage = 40
+	stats.damage = 20
 	stats.range = 500
 	stats.explosive = false
 	stats.explosion_radius = 0.0
@@ -17,10 +17,10 @@ func _ready() -> void:
 	stats.projectile_speed = 400
 	stats.crit_chance = 0.1
 	stats.crit_mod = 2.0
-	stats.pierce = 1
+	stats.pierce = 0
+	stats.pierce_degradation = 0.2
 	set_attack_speed(stats.attack_speed)
 	#add_upgrade(202)
-	#print(get_qualified_upgrades())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,7 +32,6 @@ func spawn_fireball() -> void:
 	attack.position = global_position
 	attack.stats = stats
 	get_tree().get_nodes_in_group("main")[0].add_child(attack)
-	#print(stats.attack_speed_add)
 
 
 func _on_attack_timer_timeout() -> void:
@@ -44,8 +43,6 @@ func _on_attack_timer_timeout() -> void:
 
 func set_attack_speed(aps: float):
 	$AttackTimer.wait_time = 1/aps
-	print(str("aps ", aps))
-	print(str("time ", 1/aps))
 	
 
 # Example to loop properties
@@ -55,11 +52,9 @@ func print_user_defined_fields(obj):
 		if prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
 			var name = prop.name
 			var value = obj.get(name)
-			print(name, ": ", value)
 
 func add_upgrade(upgrade_id: int):
 	upgrades.append(upgrade_id)
 	var upgrade = Upgrades.get_upgrade(upgrade_id)
 	stats = upgrade.stats_mod.call(stats)
 	set_attack_speed((stats.attack_speed+stats.attack_speed_add) * stats.attack_speed_mul)
-	#print(upgrades)

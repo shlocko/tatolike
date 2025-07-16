@@ -13,7 +13,6 @@ func _ready():
 	create_general_spell_upgrades()
 	create_circle_upgrades()
 	create_arrow_upgrades()
-	#print(get_all_from_spell("circle"))
 
 
 # -------------------------
@@ -30,7 +29,7 @@ func create_general_spell_upgrades():
 		"Repeater",
 		011,
 		"Increase Attack Speed by 20%.",
-		30
+		10
 	)
 	repeater.stats_mod = func(stats: Stats) -> Stats:
 		stats.attack_speed_mul += 0.2
@@ -42,7 +41,7 @@ func create_general_spell_upgrades():
 		"Repeater II",
 		012,
 		"Increase Attack Speed by 10%.",
-		40
+		20
 	)
 	repeater_2.stats_mod = func(stats: Stats) -> Stats:
 		stats.attack_speed_mul += 0.1
@@ -55,7 +54,7 @@ func create_general_spell_upgrades():
 		"Repeater III",
 		013,
 		"Increase Attack Speed by 20%.",
-		60
+		50
 	)
 	repeater_3.stats_mod = func(stats: Stats) -> Stats:
 		stats.attack_speed_mul += 0.2
@@ -71,7 +70,7 @@ func create_general_spell_upgrades():
 		"Sharp Edge",
 		021,
 		"Increase Damage by 20%",
-		25
+		15
 	)
 	sharp_edge.stats_mod = func(stats: Stats) -> Stats:
 		stats.damage_mul += 0.2
@@ -83,7 +82,7 @@ func create_general_spell_upgrades():
 		"Sharp Edge II",
 		022,
 		"Increase Damage by 10%",
-		30
+		25
 	)
 	sharp_edge_2.stats_mod = func(stats: Stats) -> Stats:
 		stats.damage_mul += 0.1
@@ -109,7 +108,7 @@ func create_general_spell_upgrades():
 		"Sharp Edge IV",
 		024,
 		"Increase Damage by 20%",
-		55
+		75
 	)
 	sharp_edge_4.stats_mod = func(stats: Stats) -> Stats:
 		stats.damage_mul += 0.2
@@ -125,7 +124,7 @@ func create_general_spell_upgrades():
 		"Longshot",
 		031,
 		"Increase Range by 20%",
-		25
+		10
 	)
 	longshot.stats_mod = func(stats: Stats) -> Stats:
 		stats.range_mul += 0.2
@@ -137,7 +136,7 @@ func create_general_spell_upgrades():
 		"Longshot II",
 		032,
 		"Increase Range by 10%",
-		35
+		25
 	)
 	longshot_2.stats_mod = func(stats: Stats) -> Stats:
 		stats.range_mul += 0.1
@@ -150,7 +149,7 @@ func create_general_spell_upgrades():
 		"Longshot III",
 		033,
 		"Increase Range by 20%",
-		50
+		65
 	)
 	longshot_3.stats_mod = func(stats: Stats) -> Stats:
 		stats.range_mul += 0.2
@@ -166,7 +165,7 @@ func create_general_spell_upgrades():
 		"Keen Eye",
 		041,
 		"Increase Crit Chance by 10%.",
-		25
+		10
 	)
 	keen_eye.stats_mod = func(stats: Stats) -> Stats:
 		stats.crit_chance_add += 0.10
@@ -178,7 +177,7 @@ func create_general_spell_upgrades():
 		"Keen Eye II",
 		042,
 		"Increase Crit Chance by 5%.",
-		30
+		25
 	)
 	keen_eye_2.stats_mod = func(stats: Stats) -> Stats:
 		stats.crit_chance_add += 0.05
@@ -191,7 +190,7 @@ func create_general_spell_upgrades():
 		"Keen Eye III",
 		043,
 		"Increase Crit Chance by 15%.",
-		45
+		55
 	)
 	keen_eye_3.stats_mod = func(stats: Stats) -> Stats:
 		stats.crit_chance_add += 0.15
@@ -200,6 +199,19 @@ func create_general_spell_upgrades():
 	registry[keen_eye_3.id] = keen_eye_3
 	reg.append(keen_eye_3.id)
 	
+	var keen_eye_4: Upgrade = Upgrade.new(
+		"Keen Eye IV",
+		044,
+		"Increase Crit Chance by 25%.",
+		85
+	)
+	keen_eye_4.stats_mod = func(stats: Stats) -> Stats:
+		stats.crit_chance_add += 0.25
+		return stats
+	keen_eye_4.relies_on = [043]
+	registry[keen_eye_4.id] = keen_eye_4
+	reg.append(keen_eye_4.id)
+	
 	# -------------------------
 	# Hypervelocity (Projectile Speed Multiplier Path)
 	# -------------------------
@@ -207,7 +219,7 @@ func create_general_spell_upgrades():
 		"Hypervelocity",
 		051,
 		"Increase Projectile Speed by 20%.",
-		25
+		10
 	)
 	hypervelocity.stats_mod = func(stats: Stats) -> Stats:
 		stats.projectile_speed_mul += 0.2
@@ -219,7 +231,7 @@ func create_general_spell_upgrades():
 		"Hypervelocity II",
 		052,
 		"Increase Projectile Speed by 25%.",
-		40
+		25
 	)
 	hypervelocity_2.stats_mod = func(stats: Stats) -> Stats:
 		stats.projectile_speed_mul += 0.25
@@ -261,7 +273,7 @@ func create_circle_upgrades():
 		"Piercing Shot",
 		101,
 		"Allows projectile to pierce enemies",
-		40
+		20
 	)
 	piercing_shot.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.pierce_add += 1
@@ -274,7 +286,7 @@ func create_circle_upgrades():
 		"Piercing Shot II",
 		102,
 		"Increases pierce by 1",
-		50
+		45
 	)
 	piercing_shot_2.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.pierce_add += 1
@@ -302,7 +314,7 @@ func create_circle_upgrades():
 		"Piercing Shot IV",
 		104,
 		"Increases pierce by 2",
-		75
+		95
 	)
 	piercing_shot_4.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.pierce_add += 2
@@ -320,7 +332,7 @@ func create_circle_upgrades():
 		"Explosive Shot",
 		111,
 		"Causes projectile to explode on contact",
-		40
+		25
 	)
 	explosive_shot.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.explosive	= true
@@ -333,7 +345,7 @@ func create_circle_upgrades():
 		"Explosive Shot II",
 		112,
 		"Increase explosion radius by 50%, and explosion damage by 20%",
-		60
+		50
 	)
 	explosive_shot_2.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.explosion_mod_add += 0.2
@@ -352,7 +364,7 @@ func create_circle_upgrades():
 		"Overclocked",
 		121,
 		"Increase Attack Speed by 15% but reduce Damage by 10%",
-		25
+		15
 	)
 	overclocked.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.attack_speed_mul += 0.15
@@ -379,7 +391,7 @@ func create_circle_upgrades():
 		"Overclocked III",
 		123,
 		"Increase Attack Speed by 25% but reduce Damage by 15%",
-		45
+		65
 	)
 	overclocked_3.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.attack_speed_mul += 0.25
@@ -392,12 +404,12 @@ func create_circle_upgrades():
 	var overclocked_4: Upgrade = Upgrade.new(
 		"Overclocked IV",
 		124,
-		"Increase Attack Speed by 20% but reduce Crit Chance by 30%",
-		60
+		"Increase Attack Speed by 20% but reduce Crit Chance by 10%",
+		95
 	)
 	overclocked_4.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.attack_speed_mul += 0.2
-		stats.crit_chance_add -= 0.3
+		stats.crit_chance_add -= 0.1
 		return stats
 	overclocked_4.relies_on = [123]
 	registry[overclocked_4.id] = overclocked_4
@@ -406,12 +418,12 @@ func create_circle_upgrades():
 	var overclocked_5: Upgrade = Upgrade.new(
 		"Overclocked V",
 		125,
-		"Increase Attack Speed by 20% but reduce Crit Chance by 30%",
-		75
+		"Increase Attack Speed by 30% but reduce Crit Chance by 15%",
+		120
 	)
 	overclocked_5.stats_mod = func(stats: CircleStats) -> CircleStats:
-		stats.attack_speed_mul += 0.2
-		stats.crit_chance_add -= 0.3
+		stats.attack_speed_mul += 0.3
+		stats.crit_chance_add -= 0.15
 		return stats
 	overclocked_5.relies_on = [124]
 	registry[overclocked_5.id] = overclocked_5
@@ -424,7 +436,7 @@ func create_circle_upgrades():
 		"Precision Matrix",
 		131,
 		"Increase Crit Chance by 20%",
-		30
+		15
 	)
 	precision_matrix.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.crit_chance_add += 0.2
@@ -437,7 +449,7 @@ func create_circle_upgrades():
 		"Precision Matrix II",
 		132,
 		"Increase Projectile Speed by 40%, Crit Damage by 50%, and reduce Attack Speed by 10%",
-		45
+		35
 	)
 	precision_matrix_2.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.projectile_speed_mul += 0.4
@@ -467,7 +479,7 @@ func create_circle_upgrades():
 		"Precision Matrix IV",
 		134,
 		"Reduce Damage by 10% and Attack Speed by 30%",
-		65
+		75
 	)
 	precision_matrix_4.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.damage_mul -= 0.1
@@ -482,7 +494,7 @@ func create_circle_upgrades():
 		"Precision Matrix V",
 		135,
 		"Projectiles pierce infinitely",
-		85
+		120
 	)
 	precision_matrix_5.stats_mod = func(stats: CircleStats) -> CircleStats:
 		stats.pierce_add += 999
@@ -492,9 +504,144 @@ func create_circle_upgrades():
 	registry[precision_matrix_5.id] = precision_matrix_5
 	reg.append(precision_matrix_5.id)
 	
+	# -------------------------
+	# Core Collapse (Power vs. Penetration Tradeoff)
+	# -------------------------
+	var core_collapse: Upgrade = Upgrade.new(
+		"Core Collapse",
+		301,
+		"Increase damage by 25%, but piercing damage degrades 4% more",
+		15
+	)
+	core_collapse.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.damage_mul += 0.25
+		stats.pierce_degradation_add += 0.04
+		return stats
+	registry[core_collapse.id] = core_collapse
+	reg.append(core_collapse.id)
+
+	var core_collapse_2: Upgrade = Upgrade.new(
+		"Core Collapse II",
+		302,
+		"Increase damage by 15%, but piercing damage degrades 1% more",
+		35
+	)
+	core_collapse_2.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.damage_mul += 0.15
+		stats.pierce_degradation_add += 0.01
+		return stats
+	core_collapse_2.relies_on = [301]
+	registry[core_collapse_2.id] = core_collapse_2
+	reg.append(core_collapse_2.id)
+
+	var core_collapse_3: Upgrade = Upgrade.new(
+		"Core Collapse III",
+		303,
+		"Increase damage by 15%, but piercing damage degrades 1% more",
+		60
+	)
+	core_collapse_3.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.damage_mul += 0.15
+		stats.pierce_degradation_add += 0.01
+		return stats
+	core_collapse_3.relies_on = [302]
+	registry[core_collapse_3.id] = core_collapse_3
+	reg.append(core_collapse_3.id)
+
+	var core_collapse_4: Upgrade = Upgrade.new(
+		"Core Collapse IV",
+		304,
+		"Increase damage by 30%, but piercing damage degrades 1% more",
+		95
+	)
+	core_collapse_4.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.damage_mul += 0.3
+		stats.pierce_degradation_add += 0.01
+		return stats
+	core_collapse_4.relies_on = [303]
+	registry[core_collapse_4.id] = core_collapse_4
+	reg.append(core_collapse_4.id)
+	
+	var core_collapse_5: Upgrade = Upgrade.new(
+		"Core Collapse V",
+		305,
+		"Increase damage by 50%, but piercing damage degrades 3% more",
+		130
+	)
+	core_collapse_5.stats_mod = func(stats: CircleStats) -> CircleStats:
+		stats.damage_mul += 0.5
+		stats.pierce_degradation_add += 0.03
+		return stats
+	core_collapse_5.relies_on = [303]
+	registry[core_collapse_5.id] = core_collapse_5
+	reg.append(core_collapse_5.id)
+	
+	
 	registry_by_spell["circle"] = reg
+
+
+	# -------------------------
+	# Arrow Upgrades
+	# -------------------------
 
 func create_arrow_upgrades():
 	var reg = []
+	
+	# -------------------------
+	# Layerbreaker (Piercing Path)
+	# -------------------------
+	var layerbreaker: Upgrade = Upgrade.new(
+		"Layerbreaker",
+		201,
+		"Increase piercing by 2",
+		20
+	)
+	layerbreaker.stats_mod = func(stats: ArrowStats) -> ArrowStats:
+		stats.pierce_add += 2
+		return stats
+	registry[layerbreaker.id] = layerbreaker
+	reg.append(layerbreaker.id)
+
+	var layerbreaker_2: Upgrade = Upgrade.new(
+		"Layerbreaker II",
+		202,
+		"Increase piercing by 1",
+		45
+	)
+	layerbreaker_2.stats_mod = func(stats: ArrowStats) -> ArrowStats:
+		stats.pierce_add += 1
+		return stats
+	layerbreaker_2.relies_on = [201]
+	registry[layerbreaker_2.id] = layerbreaker_2
+	reg.append(layerbreaker_2.id)
+
+	var layerbreaker_3: Upgrade = Upgrade.new(
+		"Layerbreaker III",
+		203,
+		"Increase piercing by 2",
+		65
+	)
+	layerbreaker_3.stats_mod = func(stats: ArrowStats) -> ArrowStats:
+		stats.pierce_add += 2
+		return stats
+	layerbreaker_3.relies_on = [202]
+	registry[layerbreaker_3.id] = layerbreaker_3
+	reg.append(layerbreaker_3.id)
+
+	var layerbreaker_4: Upgrade = Upgrade.new(
+		"Layerbreaker IV",
+		204,
+		"Increase piercing by 3",
+		95
+	)
+	layerbreaker_4.stats_mod = func(stats: ArrowStats) -> ArrowStats:
+		stats.pierce_add += 3
+		return stats
+	layerbreaker_4.relies_on = [203]
+	registry[layerbreaker_4.id] = layerbreaker_4
+	reg.append(layerbreaker_4.id)	
+	
+	
+	
 	
 	registry_by_spell["arrow"] = reg

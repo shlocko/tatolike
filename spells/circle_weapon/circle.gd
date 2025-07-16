@@ -6,12 +6,14 @@ var active = false
 var velocity = Vector2.ZERO
 var stats: CircleStats
 var pierce_health: int
+var pierce_count: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	launch()
 	active = true
 	pierce_health = stats.get_pierce()
+	
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,7 +41,7 @@ func _on_body_entered(body: Node2D) -> void:
 	var damage = stats.get_damage()
 	if(randf_range(0, 1) < stats.get_crit_chance()):
 		damage *= stats.get_crit_mod()
-	body.hit(damage, velocity.normalized()*30)
-	pierce_health -= 1
-	if pierce_health <= 0:
+	body.hit(stats.get_degraded_damage(damage, pierce_count), velocity.normalized()*30)
+	if pierce_count >= pierce_health:
 		queue_free()
+	pierce_count += 1

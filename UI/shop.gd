@@ -110,7 +110,6 @@ func shop_refresh_visual():
 func open():
 	spells = get_tree().get_nodes_in_group("player")[0].get_spells()
 	for i in spells.size():
-		print(i, "rerolled")
 		upgrade_shop_reroll(i)
 	upgrade_reroll_cost = GlobalState.wave
 	spell_shop_reroll()
