@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://q6dtjvgyifg3"]
+
+[ext_resource type="Texture2D" uid="uid://djlwh4bn5nl7u" path="res://art/square.png" id="1_onjxw"]
+[ext_resource type="Script" path="res://mobs/basic_mob.gd" id="1_rd33o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuk0q"]
+radius = 28.1603
+
+[node name="Square" type="RigidBody2D" groups=["mobs"]]
+lock_rotation = true
+script = ExtResource("1_rd33o")
+speed = 100
+health = 90
+value = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 12)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_onjxw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tuk0q")

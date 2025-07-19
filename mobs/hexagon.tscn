@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://tp6gnw5ogt06"]
+
+[ext_resource type="Script" path="res://mobs/basic_mob.gd" id="1_nqard"]
+[ext_resource type="Texture2D" uid="uid://b8ya824uywhjn" path="res://art/hexagon.png" id="2_tt8oo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuk0q"]
+radius = 28.1603
+
+[node name="Hexagon" type="RigidBody2D" groups=["mobs"]]
+lock_rotation = true
+script = ExtResource("1_nqard")
+speed = 100
+health = 275
+value = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 14)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_tt8oo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tuk0q")

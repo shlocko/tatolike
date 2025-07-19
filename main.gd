@@ -2,9 +2,11 @@ extends Node2D
 
 var current_scene: Node = null
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	load_main_menu()
+	
 
 func load_level():
 	change_scene("res://level.tscn")

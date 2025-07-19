@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d78ga"]
 size = Vector2(8, 24)
 
-[node name="Arrow" type="Area2D"]
+[node name="Arrow" type="Area2D" groups=["projectile"]]
 script = ExtResource("1_knn46")
 metadata/_edit_group_ = true
 

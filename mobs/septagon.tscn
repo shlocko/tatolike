@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwcwaw7neex1t"]
+
+[ext_resource type="Script" path="res://mobs/basic_mob.gd" id="1_7uk3y"]
+[ext_resource type="Texture2D" uid="uid://cdhk20euoe0dl" path="res://art/septagon.png" id="2_8i67m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuk0q"]
+radius = 28.1603
+
+[node name="Septagon" type="RigidBody2D" groups=["mobs"]]
+lock_rotation = true
+script = ExtResource("1_7uk3y")
+speed = 100
+health = 350
+value = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 4)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_8i67m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tuk0q")

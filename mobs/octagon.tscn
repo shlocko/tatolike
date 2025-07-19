@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1ievldi5gvvq"]
+
+[ext_resource type="Script" path="res://mobs/basic_mob.gd" id="1_s0oyp"]
+[ext_resource type="Texture2D" uid="uid://bki6clehcj8gx" path="res://art/octagon.png" id="2_708na"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuk0q"]
+radius = 28.1603
+
+[node name="Octagon" type="RigidBody2D" groups=["mobs"]]
+position = Vector2(0, -1)
+lock_rotation = true
+script = ExtResource("1_s0oyp")
+speed = 100
+health = 450
+value = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_708na")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tuk0q")

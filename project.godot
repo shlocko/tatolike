@@ -27,9 +27,9 @@ window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
-[editor_plugins]
+[dotnet]
 
-enabled=PackedStringArray("res://addons/godot-vim/plugin.cfg")
+project/assembly_name="Bruhmater"
 
 [input]
 

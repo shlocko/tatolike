@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bdn20qoagw37t" path="res://art/spawn_marker.png" id="1_d687w"]
 [ext_resource type="Script" path="res://spawn_marker.gd" id="2_rvoc6"]
 
-[node name="SpawnMarker" type="Sprite2D"]
+[node name="SpawnMarker" type="Sprite2D" groups=["spawn_markers"]]
 texture_filter = 1
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_d687w")
