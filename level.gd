@@ -21,6 +21,7 @@ func _ready() -> void:
 	spawners.append($Spawner4)
 	spawners.append($Spawner5)
 	GlobalState.next_wave.connect(next_wave)
+	GlobalState.player_died.connect(end_game)
 	$WaveTimer.wait_time = 45
 	$WaveTimer.start()
 
@@ -41,6 +42,8 @@ func choose_mob():
 		
 
 func _on_spawn_mob_timer_timeout() -> void:
+	if GlobalState.dead:
+		return
 	var spawner = spawners.pick_random()
 	for n in randi_range(max(1, GlobalState.wave / 3), (GlobalState.wave + GlobalState.difficulty_base)):
 		await get_tree().create_timer(0.1).timeout
@@ -49,7 +52,10 @@ func _on_spawn_mob_timer_timeout() -> void:
 
 
 func _on_wave_timer_timeout() -> void:
-	wave_end()
+	if GlobalState.wave < 20:
+		wave_end()
+	else:
+		GlobalState.player_died.emit()
 
 func wave_end():
 	$Shop.open()
@@ -81,3 +87,6 @@ func clear_entities():
 	clear_mobs()
 	clear_projectiles()
 	clear_spawn_markers()
+
+func end_game():
+	clear_entities()

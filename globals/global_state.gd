@@ -4,10 +4,12 @@ const play_area = Vector2(1260, 740)
 var money: int
 var wave: int
 var difficulty_base: int
+var dead: bool = false
 
 signal buy_upgrade(spell_id: int, upgrade_id: int, price: int)
 signal buy_spell(spell_id: int, price: int)
 signal next_wave
+signal player_died
 
 var spell_registry: Dictionary = {}
 
@@ -48,5 +50,5 @@ func start_game(diff: int):
 	money = 0
 	wave = 1
 	difficulty_base = diff
-	add_spell(0)
+	#add_spell(0)
 	#max_spell_count = floor((wave + difficulty_base) / 5) + 1

@@ -16,9 +16,13 @@ func _ready() -> void:
 	position = Vector2(100, 100)
 	$attackTimer.start()
 	health = max_health
+	GlobalState.player_died.connect(die)
+	$AnimatedSprite2D.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if GlobalState.dead:
+		return
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
@@ -32,27 +36,30 @@ func _process(delta: float) -> void:
 	
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
-		$AnimatedSprite2D.play()
-	else:
-		$AnimatedSprite2D.stop()
 	
 	if velocity.x > 0:
 		$AnimatedSprite2D.animation = "walk_right"
+		$AnimatedSprite2D.flip_h = false
 	elif velocity.x < 0:
-		$AnimatedSprite2D.animation = "walk_left"
+		$AnimatedSprite2D.animation = "walk_right"
+		$AnimatedSprite2D.flip_h = true
 	elif velocity.y < 0:
 		$AnimatedSprite2D.animation = "walk_up"
+		$AnimatedSprite2D.flip_h = false
 	elif velocity.y > 0:
 		$AnimatedSprite2D.animation = "walk_down"
+		$AnimatedSprite2D.flip_h = false
 	else:
 		$AnimatedSprite2D.animation = "stand"
+		$AnimatedSprite2D.flip_h = false
 		
 	
 	position += velocity * delta
 	position = position.clamp(Vector2(15, 0), play_area)
 	
 	if health <= 0:
-		get_tree().root.get_node("Main").load_main_menu()
+		#get_tree().root.get_node("Main").load_main_menu()
+		GlobalState.player_died.emit()
 	health = clamp(health, 0, max_health)
 
 
@@ -77,3 +84,8 @@ func get_spells() -> Array[SpellFactory]:
 		if ch is SpellFactory:
 			spells.append(ch)
 	return spells
+
+func die():
+	GlobalState.dead = true
+	$AnimatedSprite2D.animation = "die"
+	$AnimatedSprite2D.flip_h = false
